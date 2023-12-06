@@ -99,7 +99,7 @@ public class Incidente {
     }
     public boolean esMiembroEnComunidadesAfectadas(Miembro miembro) {
         for (Comunidad comunidad : this.getComunidadesAfectadas()) {
-            if (comunidad.getMiembros().contains(miembro)) {
+            if (comunidad.getMiembros().stream().anyMatch(miem -> miembro.getId()== miem.getId())) {
                 return true; // El miembro se encuentra en una de las comunidades afectadas
             }
         }

@@ -7,8 +7,12 @@ import javax.persistence.EntityManager;
 
 public class RepositorioNotificacionDiferida
 {
-    EntityManager entityManager = EntityManagerProvider.getInstance().getEntityManager();
+    private static EntityManager entityManager = EntityManagerProvider.getInstance().getUniqueEntityManager();
 
+    public static EntityManager getEntityManager()
+    {
+        return entityManager;
+    }
     public void save(NotificacionDiferida notificacionDiferida)
     {
         //if (!entityManager.getTransaction().isActive())

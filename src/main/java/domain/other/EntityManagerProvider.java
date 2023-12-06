@@ -27,6 +27,11 @@ public class EntityManagerProvider {
         if (em == null || !em.isOpen()) {
             em = emf.createEntityManager();
         }
+        return em;//emf.createEntityManager();
+    }
+    public synchronized EntityManager getUniqueEntityManager()
+    {
         return emf.createEntityManager();
     }
+
 }

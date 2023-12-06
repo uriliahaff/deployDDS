@@ -61,6 +61,9 @@ public class Router {
             Server.app().get("/rankings",
                     ((RankingController) FactoryController.controller("rankings"))::index,
                     adminEntidad, adminOrganismo);
+            Server.app().post("/generarRankings",
+                    ((RankingController) FactoryController.controller("rankings"))::generarRanking,
+                    adminEntidad, adminOrganismo);
             Server.app().get("/ranking/{id}",
                     ((RankingController) FactoryController.controller("rankings"))::ranking,
                     admin, adminEntidad, adminOrganismo);

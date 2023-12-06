@@ -84,7 +84,7 @@ public class EntidadController
         model.put("provincias",repositorioDireccion.findAllProvincias());
         model.put("localidades",repositorioDireccion.findAllLocalidades());
         model.put("municipios",repositorioDireccion.findAllMunicipios());
-        try {
+        /*try {
             // Configura el loader para buscar plantillas en el directorio /templates
             Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
 
@@ -103,11 +103,17 @@ public class EntidadController
             // Es importante manejar esta excepción adecuadamente
             context.status(500).result("Error al procesar la plantilla de incidentes.");
             return; // Sal del método aquí si no quieres procesar más el request debido al error
+        }*/
+        Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
+        try {
+            model.put("crearDireccion", handlebars.compile("common_CrearDireccion").apply(model));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         // Renderiza la plantilla común con el contenido incluido
-        context.render("layout_comun.hbs", model);
-
+       // context.render("layout_comun.hbs", model);
+        context.render("entidad_detalle.hbs", model);
     }
 
     public void crearEntidad(Context context)

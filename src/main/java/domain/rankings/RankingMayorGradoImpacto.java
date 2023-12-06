@@ -51,7 +51,7 @@ public class RankingMayorGradoImpacto implements Ranking {
                 );
         Leaderboard leaderboard = new Leaderboard(rankLeaderBoardUnitList, LeaderBoardType.MAYOR_GRADO_IMPACTO);
         new RepositorioLeaderBoard().save(leaderboard);
-        return null;
+        return leaderboard;
     }
 
     private Map<Entidad, Double> calcularGradoImpactoPorEntidad(List<Incidente> incidentes) {

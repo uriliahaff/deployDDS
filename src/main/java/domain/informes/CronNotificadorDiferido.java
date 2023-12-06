@@ -77,7 +77,9 @@ public class CronNotificadorDiferido {
     }
 
     public void executeAndDeleteExpiredNotifications() {
-        EntityManager em = EntityManagerProvider.getInstance().getEntityManager();
+
+        EntityManager em = EntityManagerProvider.getInstance().getUniqueEntityManager();
+
         em.getTransaction().begin();
 
         TypedQuery<NotificacionDiferida> query = em.createQuery(

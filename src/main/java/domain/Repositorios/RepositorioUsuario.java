@@ -33,6 +33,10 @@ public class RepositorioUsuario {
         return entityManager.createQuery("SELECT o FROM OrganismoDeControl o", OrganismoDeControl.class)
                 .getResultList();
     }
+    public List<EntidadPrestadora> findAllEntidadPrestadora() {
+        return entityManager.createQuery("SELECT e FROM EntidadPrestadora e", EntidadPrestadora.class)
+                .getResultList();
+    }
 
 
     public OrganismoDeControl findOrganismoDeControlByUserId(int userId) {
@@ -155,6 +159,29 @@ public class RepositorioUsuario {
             int i = 0;
             for (OrganismoDeControl organismo : organismosDeControl) {
                 entityManager.persist(organismo);
+
+                if (i % 20 == 0) { // Flush and clear in batches
+                    entityManager.flush();
+                    entityManager.clear();
+                }
+                i++;
+            }
+
+            entityManager.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e; // or handle it appropriately
+        }
+    }
+    public void saveEntidadesPrestadoras(List<EntidadPrestadora> entidadesPrestadoras) {
+        entityManager.getTransaction().begin();
+
+        try {
+            int i = 0;
+            for (EntidadPrestadora entidadPrestadora : entidadesPrestadoras) {
+                entityManager.persist(entidadPrestadora);
 
                 if (i % 20 == 0) { // Flush and clear in batches
                     entityManager.flush();

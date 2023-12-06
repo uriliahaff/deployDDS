@@ -21,17 +21,18 @@ import java.util.Map;
 public class EntidadesOrganismosController {
     private EntityManager entityManager;
 
-    private RepositorioEntidadPrestadoraOrganismoControl repositorioDeEntidadesPrestadoras;
-    private RepositorioUsuario repositorioUsuario;
+    //private RepositorioEntidadPrestadoraOrganismoControl repositorioDeEntidadesPrestadoras;
+
+    private RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
 
 
     public EntidadesOrganismosController(RepositorioEntidadPrestadoraOrganismoControl repo, RepositorioUsuario repoUsuario){
-        this.repositorioDeEntidadesPrestadoras = repo;
-        this.repositorioUsuario = repoUsuario;
+        //this.repositorioDeEntidadesPrestadoras = repo;
+        //this.repositorioUsuario = repoUsuario;
     }
     public void indexEntidades(Context context){
         Map<String, Object> model = new HashMap<>();
-        List<EntidadPrestadora> entidades = this.repositorioDeEntidadesPrestadoras.buscarTodosEntidades();
+        List<EntidadPrestadora> entidades = repositorioUsuario.findAllEntidadPrestadora();
         model.put("entidades", entidades);
         model.put("username", context.cookie("username"));
         model.put("UserId",context.cookie("id"));
@@ -45,7 +46,7 @@ public class EntidadesOrganismosController {
 
     public void indexOrganismos(Context context){
         Map<String, Object> model = new HashMap<>();
-        List<OrganismoDeControl> organismos = this.repositorioDeEntidadesPrestadoras.buscarTodosOrganismos();
+        List<OrganismoDeControl> organismos = repositorioUsuario.findAllOrganismoDeControl();
         model.put("organismos", organismos);
         model.put("username", context.cookie("username"));
         model.put("UserId",context.cookie("id"));
@@ -66,7 +67,7 @@ public class EntidadesOrganismosController {
                 CSVDataLoader csvDataLoader = new CSVDataLoader();
                 List<EntidadPrestadora> entidadesACargar = csvDataLoader.leerArchivoEntidades(inputStream);
 
-                repositorioDeEntidadesPrestadoras.guardarEntidadesPrestadoras(entidadesACargar);
+                repositorioUsuario.saveEntidadesPrestadoras(entidadesACargar);
 
                 context.redirect("/entidades");
 
@@ -86,7 +87,7 @@ public class EntidadesOrganismosController {
                 CSVDataLoader csvDataLoader = new CSVDataLoader();
                 List<OrganismoDeControl> organismosDeControl = csvDataLoader.leerArchivoOrganismo(inputStream);
 
-                repositorioDeEntidadesPrestadoras.guardarOrganismosControl(organismosDeControl);
+                repositorioUsuario.saveOrganismosDeControl(organismosDeControl);
 
 
                 context.redirect("/cargaOrganismos");

@@ -78,7 +78,7 @@ public void indexIncidentes(Context context) {
                 .stream()
                 .filter(incidente -> incidente.esMiembroEnComunidadesAfectadas(miembro))
                 .toList();
-
+        System.out.println(incidentes.size());
     }
 
     /*/ Formatear la fecha de inicio

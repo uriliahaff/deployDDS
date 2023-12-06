@@ -40,25 +40,24 @@ public class PerfilController
     {
 
         int profileUserId = Integer.parseInt(context.cookie("id"));
-        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(profileUserId);
-        System.out.println(miembro);
+        //System.out.println(miembro);
         Usuario user = repositorioUsuario.findUsuarioById(profileUserId);
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("editarMiembro", user.tienePermiso("editarMiembro"));
-        model.put("profileId",profileUserId);
-        model.put("username", context.cookie("username"));
-        miembro.getServiciosQueAfectan().size();
-        model.put("miembro",miembro);
-        model.put("showMedioPreferido", miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido().name());
+        OrganismoDeControl organismoDeControl = repositorioUsuario.findOrganismoDeControlByUserId(profileUserId);
+        if(organismoDeControl!=null)
+        {
+            context.redirect("/perfil/organismo/"+organismoDeControl.getId());
+            return;
+        }
+        EntidadPrestadora entidadPrestadora = repositorioUsuario.findEntidadPrestadoraByUserId(profileUserId);
+        if (entidadPrestadora!= null)
+        {
+            context.redirect("/perfil/entidad/"+entidadPrestadora.getId());
+            return;
+        }
+        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(profileUserId);
+        nuevoRenderPerfilMiembros(context,miembro, user);
 
-        model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
-
-        model.put("provincias",repositorioDireccion.findAllProvincias());
-        model.put("localidades",repositorioDireccion.findAllLocalidades());
-        model.put("municipios",repositorioDireccion.findAllMunicipios());
-        model.put("listaServicios",repositorioServicio.findAll());
-        context.render("miembroPerfil.hbs", model);
 
     }
 
@@ -71,6 +70,24 @@ public class PerfilController
     private void renderPerfilODC(Context context)
     {
 
+    }
+    private void nuevoRenderPerfilMiembros(Context context, Miembro miembro, Usuario user)
+    {
+        Map<String, Object> model = new HashMap<>();
+        model.put("editarMiembro", user.tienePermiso("editarMiembro"));
+        model.put("profileId",user.getId());
+        model.put("username", context.cookie("username"));
+        miembro.getServiciosQueAfectan().size();
+        model.put("miembro",miembro);
+        model.put("showMedioPreferido", miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido().name());
+
+        model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
+
+        model.put("provincias",repositorioDireccion.findAllProvincias());
+        model.put("localidades",repositorioDireccion.findAllLocalidades());
+        model.put("municipios",repositorioDireccion.findAllMunicipios());
+        model.put("listaServicios",repositorioServicio.findAll());
+        context.render("miembroPerfil.hbs", model);
     }
 
     private void renderPerfilMiembro(Context context)

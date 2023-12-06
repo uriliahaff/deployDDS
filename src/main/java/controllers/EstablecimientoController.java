@@ -41,7 +41,7 @@ public class EstablecimientoController
         model.put("editarEntidades", user.tienePermiso("editarEntidades") || (entidadPrestadora != null && entidadPrestadora.getEntidad().getId() == establecimiento.getEntidad().getId()));
 
 
-        CommonController.fillNav(model, user);
+        //CommonController.fillNav(model, user);
 
         List<Entidad> entidades = repositorioEntidad.findAll();
         model.put("entidades", entidades);
