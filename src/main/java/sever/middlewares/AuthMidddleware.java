@@ -18,13 +18,13 @@ public class AuthMidddleware {
 
     public static void aply(JavalinConfig config) {
         List<String> listaPermitidos = Arrays.asList(
-                "signIn"
-                ,"login"
+                "login"
+                ,"logout"
                 ,"signin"
-                ,"registrar"
                 ,"registrarUsuario"
-                ,"registrarOrganismo"
-                ,"registrarEntidad"
+                ,"signin"
+                ,"signinOrganismo"
+                ,"signinEntidad"
         );
         config.accessManager(((handler, context, routeRoles) -> {
             if (context.cookie("id") == null && !listaPermitidos.stream().anyMatch(permits -> context.path().equals("/"+permits)))
