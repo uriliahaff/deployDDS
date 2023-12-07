@@ -45,33 +45,30 @@ public class GEOREFController {
             if (provincia != null) {
                 System.out.println(provincia.getNombre());
                 // Actualizar la provincia existente
-                repoGEOREF.updateProvincia(new Provincia(provinciaNueva.getNombre()).setId(provinciaNueva.getId()));
+                repoGEOREF.updateProvincia(new Provincia(provinciaNueva.getNombre(), provinciaNueva.getId()));
             } else {
                 // Guardar nueva provincia
-                repoGEOREF.saveProvincia(new Provincia(provinciaNueva.getNombre()));
+                repoGEOREF.saveProvincia(new Provincia(provinciaNueva.getNombre(), provinciaNueva.getId()));
             }
+            System.out.println("PROVINCIA: "+provinciaNueva.getNombre());
             ListadoDeMunicipios municipiosNuevos = servicio.listadoDeMunicipiosDeProvincia(provinciaNueva.getId());
 
             for(Municipio municipioNuevo: municipiosNuevos.municipios){
                 if(repoGEOREF.findMunicipio(municipioNuevo.getId()) != null)
-                    repoGEOREF.updateMunicipio(new Municipio(municipioNuevo.getNombre()).setId(municipioNuevo.getId()));
+                    repoGEOREF.updateMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId()));
                 else
-                    repoGEOREF.saveMunicipio(new Municipio(municipioNuevo.getNombre())); // ERROR ACA "detached"
+                    repoGEOREF.saveMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId()));
+                System.out.println("MUNICIPIO: "+municipioNuevo.getNombre());
 
-                System.out.println(provinciaNueva.getId());
-                ListadoDeLocalidades localidadesNuevas = servicio.listadoDeLocalidadesDeProvincia(municipioNuevo.getId()); // NOSE porque no funciona
+                ListadoDeLocalidades localidadesNuevas = servicio.listadoDeLocalidadesDeMunicipio(municipioNuevo.getId());
                 for(Localidad localidadNueva: localidadesNuevas.localidades){
                     if(repoGEOREF.findLocalidad(localidadNueva.getId()) != null)
-                        repoGEOREF.updateLocalidad(new Localidad(localidadNueva.getNombre()).setId(localidadNueva.getId()));
+                        repoGEOREF.updateLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId()));
                     else
-                        repoGEOREF.saveLocalidad(localidadNueva); // ERROR ACA "detached"
-
+                        repoGEOREF.saveLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId()));
+                    System.out.println("LOCALIDAD: "+localidadNueva.getNombre());
                 }
             }
-
-            /*for(Localidad localidadNueva: localidadesNuevas.localidades){
-
-            }*/
 
         }
 

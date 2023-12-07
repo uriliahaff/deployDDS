@@ -1,0 +1,49 @@
+{{#partial "contenido" }}
+                        <!-- Begin Page Content -->
+                         <div class="container-fluid">
+
+                             <!-- Page Heading -->
+                             <h1 class="h3 mb-2 text-gray-800">Tipo de Entidades</h1>
+                             <p class="mb-4">Listado de tipos de entidades y creacion</p>
+
+                             <!-- DataTales Example -->
+                             <div class="card shadow mb-4">
+                                 <div class="card-header py-3">
+                                     <h6 class="m-0 font-weight-bold text-primary">Incidentes</h6>
+                                 </div>
+                                 <div class="card-body tabla">
+                                     <div class="table-responsive">
+                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                             <thead>
+                                                 <tr>
+                                                     <th>ID</th>
+                                                     <th>Nombre</th>
+                                                 </tr>
+                                             </thead>
+
+                                             <tbody>
+                                                  {{#each tipoEntidad}}
+                                                 <tr>
+                                                     <td>{{this.id}}</td>
+                                                     <td>{{this.tipo}}</td>
+                                                 </tr>
+                                                  {{/each}}
+
+                                             </tbody>
+                                         </table>
+                                     </div>
+                                 </div>
+                                     <div class="card-body">
+                                         <form action="/admin/crearTipoEntidad" method="POST">
+                                             <div class="form-group">
+                                                 <label for="nombreServicio">Tipo de Entidad</label>
+                                                 <input type="text" class="form-control" id="nombreTipo" name="nombreTipo" required>
+                                             </div>
+                                             <button type="submit" class="btn btn-primary mt-3">Crear Tipo de Entidad</button>
+                                         </form>
+                                     </div>
+                             </div>
+                         </div>
+                         <!-- /.container-fluid -->
+{{/partial}}
+{{> base }}

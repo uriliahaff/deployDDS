@@ -15,14 +15,14 @@ public interface GeorefService {
     Call<ListadoDeProvincias> provincias(@Query("campos")String campos);
 
     @GET("municipios")
-    Call<ListadoDeMunicipios> municipios(@Query("provincia")int idProvincia);
+    Call<ListadoDeMunicipios> municipios(@Query("provincia")long idProvincia);
 
     @GET("localidades")
     Call<ListadoDeLocalidades> localidades();
 
     @GET("localidades")
-    Call<ListadoDeLocalidades> localidades(@Query("provincia")int idProvincia);
+    Call<ListadoDeLocalidades> localidades(@Query("municipio")long idMunicipio);
 
     @GET("municipios")
-    Call<ListadoDeMunicipios> municipios(@Query("provincia")int idProvincia, @Query("campos") String campos, @Query("max") int max);
+    Call<ListadoDeMunicipios> municipios(@Query("provincia")long idProvincia, @Query("campos") String campos, @Query("max") int max);
 }

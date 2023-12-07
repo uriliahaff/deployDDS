@@ -5,18 +5,19 @@ import javax.persistence.*;
 @Entity //(name = "municipio")
 public class Municipio {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id", columnDefinition = "BIGINT")
+    private long id;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     @Column(nullable = false)
     private String nombre;
 
-    public Municipio(String nombre) {
+    public Municipio(String nombre, long id) {
         this.nombre = nombre;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -26,7 +27,7 @@ public class Municipio {
     public Municipio() {
     }
 
-    public Municipio setId(int id)
+    public Municipio setId(long id)
     {
         this.id = id;
         return this;

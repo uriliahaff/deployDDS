@@ -24,6 +24,12 @@ public class RepositorioEntidad
         entityManager.getTransaction().commit();
     }
 
+    public void save(TipoEntidad tipoEntidad) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(tipoEntidad);
+        entityManager.getTransaction().commit();
+    }
+
     public void update(Entidad entidad) {
         entityManager.getTransaction().begin();
         entityManager.merge(entidad);

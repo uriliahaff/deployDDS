@@ -34,18 +34,18 @@ public class ServicioGeoref {
         return responseListadoProvinciasArg.body();
     }
 
-    public ListadoDeMunicipios listadoDeMunicipiosDeProvincia(int id) throws IOException {
+    public ListadoDeMunicipios listadoDeMunicipiosDeProvincia(long id) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
         Call<ListadoDeMunicipios> requestListadoMunicipiosDeProvincia = georefService.municipios(id);
         Response<ListadoDeMunicipios> responseListadoMunicipiosDeProvincia = requestListadoMunicipiosDeProvincia.execute();
         return responseListadoMunicipiosDeProvincia.body();
     }
 
-    public ListadoDeLocalidades listadoDeLocalidadesDeProvincia(int id) throws IOException {
+    public ListadoDeLocalidades listadoDeLocalidadesDeMunicipio(long id) throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoDeLocalidades> requestListadoLocalidadesDeProvincia = georefService.localidades(id);
-        Response<ListadoDeLocalidades> responseListadoLocalidadesDeProvincia = requestListadoLocalidadesDeProvincia.execute();
-        return responseListadoLocalidadesDeProvincia.body();
+        Call<ListadoDeLocalidades> requestListadoLocalidadesDeMunicipio = georefService.localidades(id);
+        Response<ListadoDeLocalidades> responseListadoLocalidadesDeMunicipio = requestListadoLocalidadesDeMunicipio.execute();
+        return responseListadoLocalidadesDeMunicipio.body();
     }
 
 }

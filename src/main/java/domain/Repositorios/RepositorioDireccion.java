@@ -56,7 +56,7 @@ public class RepositorioDireccion
         entityManager.getTransaction().commit();
     }
 
-    public Provincia findProvincia(int id)
+    public Provincia findProvincia(long id)
     {
         return entityManager.find(Provincia.class, id);
     }
@@ -88,7 +88,7 @@ public class RepositorioDireccion
     public List<Localidad> findAllLocalidades() {
         return entityManager.createQuery("SELECT l FROM Localidad l", Localidad.class).getResultList();
     }
-    public Localidad findLocalidad(int id) {
+    public Localidad findLocalidad(long id) {
         return entityManager.find(Localidad.class, id);
     }
 
@@ -98,7 +98,7 @@ public class RepositorioDireccion
         entityManager.persist(municipio);
         entityManager.getTransaction().commit();
     }
-    public Municipio findMunicipio(int id) {
+    public Municipio findMunicipio(long id) {
         return entityManager.find(Municipio.class, id);
     }
     public void updateMunicipio(Municipio municipio) {

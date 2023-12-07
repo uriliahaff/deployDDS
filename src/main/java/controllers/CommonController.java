@@ -14,7 +14,7 @@ public class CommonController
     public static Map<String, Object> fillNav(Map<String, Object> model, Usuario user)
     {
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
-        model.put("itemsNav", navBarVisualizer.itemsNav(user.getRoles()));
+        navBarVisualizer.colocarItems(user.getRoles(), model);
 
         return model;
     }

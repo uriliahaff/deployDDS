@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity //(name = "provincia")
 public class Provincia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id", columnDefinition = "BIGINT")
+    private long id;
 
     @Column(nullable = false)
     private String nombre;
@@ -14,18 +14,19 @@ public class Provincia {
     public Provincia() {
     }
 
-    public Provincia(String nombre) {
+    public Provincia(String nombre, long id) {
         this.nombre = nombre;
+        this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     public String getNombre() {
         return nombre;
     }
-    public Provincia setId(int id)
+    public Provincia setId(long id)
     {
         this.setId(id);
         return this;

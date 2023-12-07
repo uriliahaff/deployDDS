@@ -13,7 +13,9 @@ import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.Usuario;
 import domain.entidades.Entidad;
 import domain.entidades.Establecimiento;
+import domain.entidades.TipoEntidad;
 import domain.localizaciones.Direccion;
+import domain.services.NavBarVisualizer;
 import domain.services.georef.entities.Localidad;
 import domain.services.georef.entities.Municipio;
 import domain.services.georef.entities.Provincia;
@@ -114,6 +116,30 @@ public class EntidadController
         // Renderiza la plantilla común con el contenido incluido
        // context.render("layout_comun.hbs", model);
         context.render("entidad_detalle.hbs", model);
+    }
+
+    public void indexTipoEntidad(Context context){
+        Map<String, Object> model = new HashMap<>();
+        model.put("username", context.cookie("username"));
+        Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
+        model.put("UserId",context.cookie("id"));
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
+
+        List<TipoEntidad> listaTiposEntidades = repositorioEntidad.findAllTipoEntidad();
+        model.put("tipoEntidad",listaTiposEntidades);
+
+        context.render("tipoEntidad.hbs", model);
+
+    }
+
+    public void crearTipoEntidad(Context context){
+        String nombreTipo = context.formParam("nombreTipo");
+
+        TipoEntidad tipoEntidad = new TipoEntidad(nombreTipo);
+        repositorioEntidad.save(tipoEntidad);
+        context.redirect("/admin/tipoentidad");
+
     }
 
     public void crearEntidad(Context context)

@@ -6,6 +6,7 @@ import domain.Usuarios.Usuario;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.security.RouteRole;
+import org.apache.commons.lang3.ObjectUtils;
 import sever.exceptions.NoAuthExcpetion;
 
 import java.util.Arrays;
@@ -52,7 +53,12 @@ public class AuthMidddleware {
         if (userIdCookie != null && !userIdCookie.isEmpty()) {
             RepositorioUsuario repo = new RepositorioUsuario();
             Usuario user = repo.findUsuarioById(Integer.parseInt(userIdCookie));
-            return user.getRoles();
+            if(user == null){
+                ctx.removeCookie("id");
+                return null;
+            }else{
+                return user.getRoles();
+            }
         }
         // Manejo adecuado cuando la cookie "id" es nula o vacía
         return Collections.emptyList(); // o null, dependiendo de tu lógica
