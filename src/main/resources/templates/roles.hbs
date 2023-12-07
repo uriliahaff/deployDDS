@@ -13,7 +13,7 @@
     <h5>Permisos Actuales:</h5>
     <ul>
         {{#each rol.permisos as |permiso|}}
-        <li>
+        <li class="p-2">
             {{permiso.descripcion}}
             <!-- Formulario para borrar permiso -->
             <form action="/admin/rol/{{rol.id}}/borrarPermiso/{{permiso.id}}" method="POST" style="display: inline;">

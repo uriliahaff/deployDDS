@@ -88,6 +88,7 @@ public class Router {
             Server.app().post("/admin/georef", ((GEOREFController) FactoryController.controller("georef"))::actualizar
                     ,admin);
 
+
             Server.app().get("/admin/tipoentidad", ((EntidadController) FactoryController.controller("entidad"))::indexTipoEntidad
                     ,admin);
             Server.app().post("/admin/crearTipoEntidad", ((EntidadController) FactoryController.controller("entidad"))::crearTipoEntidad
@@ -96,6 +97,11 @@ public class Router {
 
             Server.app().get("/admin/entidades", ((EntidadController) FactoryController.controller("entidad"))::indexEntidades,
                     admin);
+
+            Server.app().get("/admin/permisos", ((RolController) FactoryController.controller("rol"))::indexPermisos
+                    ,admin);
+            Server.app().post("/admin/crearPermiso", ((RolController) FactoryController.controller("rol"))::crearPermiso
+                    ,admin);
 
 
             Server.app().get("/aperturaIncidentes", ((IncidenteController) FactoryController.controller("incidentes"))::aperturaIncidentes);

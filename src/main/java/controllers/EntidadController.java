@@ -80,8 +80,9 @@ public class EntidadController
             throw new RuntimeException(e);
         }
 
-        // Renderiza la plantilla común con el contenido incluido
-       // context.render("layout_comun.hbs", model);
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
+
         context.render("entidad_detalle.hbs", model);
     }
 

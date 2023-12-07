@@ -15,7 +15,9 @@
             <tr>
                 <th>Nombre del Servicio</th>
                 <th>Descripción</th>
+                   {{#if editarComunidad}}
                 <th></th>
+                {{/if}}
             </tr>
             </thead>
             <tbody>
@@ -23,13 +25,15 @@
             <tr>
                 <td>{{this.nombre}}</td>
                 <td>{{this.descripcion}}</td>
+                                   {{#if editarComunidad}}
                 <td>
                     <form action="/comunidad/removerInteres" method="post">
                         <input type="hidden" name="comunidadId" value="{{comunidad.id}}" />
                         <input type="hidden" name="interesId" value="{{this.id}}" />
-                        <button type="submit" class="btn btn-warning">Quitar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-times fa-sm fa-fw mr-2 "></i>Quitar</button>
                     </form>
                 </td>
+                 {{/if}}
             </tr>
             {{/each}}
             </tbody>
@@ -62,7 +66,9 @@
             <thead>
             <tr>
                 <th>Username</th>
+                {{#if editarComunidad}}
                 <th></th>
+                {{/if}}
             </tr>
             </thead>
             <tbody>
@@ -73,7 +79,7 @@
                 <td>
                     <form action="/comunidad/removerAdmin" method="post">
                         <input type="hidden" name="adminId" value="{{this.id}}" />
-                        <button type="submit" class="btn btn-warning">Quitar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-times fa-sm fa-fw mr-2 "></i>Quitar</button>
                     </form>
                 </td>
                 {{/if}}
@@ -99,21 +105,21 @@
             <tbody>
             {{#each listaMiembros}}
             <tr>
-                <td>{{this.nombre}}</td>
-                <td>{{this.apellido}}</td>
+                <td>{{this.apellido}}, {{this.nombre}}</td>
+            {{#if editarComunidad}}
                 <td>{{this.correoElectronico}}</td>
                 <td>{{this.telefono}}</td>
-
+            {{/if}}
                 {{#if editarComunidad}}
                     <td>
                         <form action="/comunidad/{{comunidad.id}}/expulsar/{{this.id}}" method="post">
-                            <button type="submit" class="btn btn-warning">Expulsar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-times fa-sm fa-fw mr-2 "></i>Expulsar</button>
                         </form>
                     </td>
                     {{#if this.MiembroNoEsAdmin}}
                         <td>
                             <form action="/comunidad/{{comunidad.id}}/ascender/{{this.id}}" method="post">
-                                <button type="submit" class="btn btn-success">Ascender a Admin</button>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-arrow-up fa-sm fa-fw mr-2 ">Ascender a Admin</button>
                             </form>
                         </td>
                     {{/if}}
@@ -125,9 +131,14 @@
             <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Apellido</th>
+                            {{#if editarComunidad}}
                 <th>Correo Electrónico</th>
                 <th>Teléfono</th>
+                <th></th>
+                {{#if this.MiembroNoEsAdmin}}
+                                <th></th>
+                                 {{/if}}
+                                {{/if}}
             </tr>
             </thead>
         </table>

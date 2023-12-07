@@ -130,6 +130,7 @@ public class ComunidadController {
         for (Miembro miembro : comunidad.getMiembros()) {
             Map<String, Object> miembroMap = new HashMap<>();
             miembroMap.put("nombre", miembro.getNombre());
+            miembroMap.put("apellido", miembro.getApellido());
             miembroMap.put("id", miembro.getId());
             miembroMap.put("correoElectronico", miembro.getCorreoElectronico());
             miembroMap.put("telefono", miembro.getTelefono());

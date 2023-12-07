@@ -8,6 +8,7 @@ import domain.Repositorios.RepositorioServicio;
 import domain.Repositorios.RepositorioUsuario;
 import domain.Usuarios.OrganismoDeControl;
 import domain.Usuarios.Usuario;
+import domain.services.NavBarVisualizer;
 import domain.services.csvdataloader.CSVDataLoader;
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
@@ -36,25 +37,8 @@ public class OrganismoDeControlController
         }
         model.put("isAdmin",isAdmin);
 
-        //CommonController.fillNav(model,user);
-        /*try {
-            // Configura el loader para buscar plantillas en el directorio /templates
-            Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
-
-            // Compila el contenido del partial 'incidentes_template' y pásalo como 'body'
-            model.put("organismosDeControl",repositorioUsuario.findAllOrganismoDeControl());
-            Template template = handlebars.compile("organismoDeControl");
-            String bodyContent = template.apply(model);
-            model.put("body", bodyContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Es importante manejar esta excepción adecuadamente
-            context.status(500).result("Error al procesar la plantilla de incidentes.");
-            return; // Sal del método aquí si no quieres procesar más el request debido al error
-        }
-        model.put("servicios", repositorioServicio.findAll());
-        // Renderiza la plantilla común con el contenido incluido
-        context.render("layout_comun.hbs", model);*/
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
         context.render("organismoDeControl.hbs", model);
     }
 

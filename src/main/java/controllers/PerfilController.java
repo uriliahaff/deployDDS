@@ -13,6 +13,7 @@ import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.OrganismoDeControl;
 import domain.Usuarios.Usuario;
 import domain.localizaciones.Direccion;
+import domain.services.NavBarVisualizer;
 import domain.services.georef.entities.Localidad;
 import domain.services.georef.entities.Municipio;
 import domain.services.georef.entities.Provincia;
@@ -40,7 +41,6 @@ public class PerfilController
     {
 
         int profileUserId = Integer.parseInt(context.cookie("id"));
-        //System.out.println(miembro);
         Usuario user = repositorioUsuario.findUsuarioById(profileUserId);
 
         OrganismoDeControl organismoDeControl = repositorioUsuario.findOrganismoDeControlByUserId(profileUserId);
@@ -87,6 +87,10 @@ public class PerfilController
         model.put("localidades",repositorioDireccion.findAllLocalidades());
         model.put("municipios",repositorioDireccion.findAllMunicipios());
         model.put("listaServicios",repositorioServicio.findAll());
+
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
+
         context.render("miembroPerfil.hbs", model);
     }
 

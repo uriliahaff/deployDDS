@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <table class="table table-bordered" id="dataTableServicios" width="100%" cellspacing="0">
             <thead>
             <tr>
-                <th>Id del Servicio</th>
                 <th>Nombre del Servicio</th>
                 <th>Descripción</th>
             </tr>
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <tbody>
             {{#each miembro.serviciosQueAfectan}}
             <tr>
-                <td>{{this.id}}</td>
                 <td>{{this.nombre}}</td>
                 <td>{{this.descripcion}}</td>
             </tr>
@@ -163,22 +161,24 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 {{/if}}
+</div>
+<div class="card shadow mb-4">
 
-
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Comunidades</h6>
+    </div>
 <div class="card-body tabla">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTableComunidades" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>Nombre de la Comunidad</th>
-                <th>Descripción</th>
             </tr>
             </thead>
             <tbody>
             {{#each miembro.comunidades}}
             <tr>
                 <td>{{this.nombre}}</td>
-                <td>{{this.descripcion}}</td>
             </tr>
 
             {{/each}}
@@ -187,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 </div>
-
 <script>
     function checkServicioSeleccionado() {
         var servicioSeleccionado = document.getElementById("servicioDropdown").value;

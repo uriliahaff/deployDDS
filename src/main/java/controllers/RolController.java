@@ -26,6 +26,8 @@ public class RolController
     {
         Map<String,Object> model = new HashMap<>();
         model.put("UserId",context.cookie("id"));
+        model.put("username", context.cookie("username"));
+
         Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         List<Rol> roles = repositorioRol.findAllRoles();
         roles.size();
@@ -43,6 +45,27 @@ public class RolController
         context.render("roles.hbs", model);
     }
 
+    public void indexPermisos(Context context){
+        Map<String,Object> model = new HashMap<>();
+        model.put("UserId",context.cookie("id"));
+        model.put("username", context.cookie("username"));
+        Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
+        List<Permiso> permisos = repositorioRol.findAllPermisos();
+        model.put("permisos", permisos);
+
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
+
+        context.render("permisos.hbs", model);
+    }
+
+    public void crearPermiso(Context context){
+        String permisoName = context.formParam("descripcion");
+        if(permisoName!=null && !permisoName.isEmpty())
+            repositorioRol.save(new Permiso(permisoName));
+        context.redirect("/admin/admin/permisos");
+    }
+
     public void addPermiso(Context context)
     {
         int rolId = Integer.parseInt(context.pathParam("id"));
@@ -53,7 +76,7 @@ public class RolController
         Permiso permiso = repositorioRol.findPermisoById(permisoId);
         rol.getPermisos().add(permiso);
         repositorioRol.update(rol);
-        context.redirect("/roles");
+        context.redirect("/admin/roles");
 
     }
     public void borrarPermiso(Context context)
@@ -65,7 +88,7 @@ public class RolController
         Permiso permiso = repositorioRol.findPermisoById(permisoId);
         rol.getPermisos().remove(permiso);
         repositorioRol.update(rol);
-        context.redirect("/roles");
+        context.redirect("/admin/roles");
 
     }
 
@@ -74,6 +97,6 @@ public class RolController
         String rolName = context.formParam("nuevoRolNombre");
         if(rolName!=null && !rolName.isEmpty())
             repositorioRol.save(new Rol(rolName, new ArrayList<>()));
-        context.redirect("/roles");
+        context.redirect("/admin/roles");
     }
 }
