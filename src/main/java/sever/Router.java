@@ -106,6 +106,8 @@ public class Router {
 
 
             Server.app().get("/comunidades", ((ComunidadController) FactoryController.controller("comunidad"))::indexComunidades);
+            Server.app().get("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::indexCreacion);
+            Server.app().post("/comunidades/crear", ((ComunidadController) FactoryController.controller("comunidad"))::crearComunidad);
             Server.app().post("/comunidad/delete/{id}", ((ComunidadController) FactoryController.controller("comunidad"))::eliminarComunidad);
             Server.app().get("/comunidad/{id}", ((ComunidadController) FactoryController.controller("comunidad"))::mostrarComunidad);
             Server.app().post("/comunidad/{comunidadId}/expulsar/{miembroId}", ((ComunidadController) FactoryController.controller("comunidad"))::expulsarMiembro);

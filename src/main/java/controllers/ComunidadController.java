@@ -9,18 +9,18 @@ import domain.Repositorios.RepositorioUsuario;
 import domain.Usuarios.Comunidades.Comunidad;
 import domain.Usuarios.Comunidades.Miembro;
 import domain.Usuarios.EntidadPrestadora;
+import domain.Usuarios.Rol;
 import domain.Usuarios.Usuario;
 import domain.services.NavBarVisualizer;
 import domain.servicios.Servicio;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
+import sever.Server;
+
+import java.util.*;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ComunidadController {
@@ -37,16 +37,69 @@ public class ComunidadController {
         List<Comunidad> comunidades = repositorioComunidad.findAll();
         model.put("comunidades", comunidades);
         model.put("editarComunidad", user.tienePermiso("editarComunidad")); // RolX es el rol necesario
+
+        List<Servicio> intereses = repositorioServicio.findAll();
+        model.put("intereses", intereses);
+
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
         navBarVisualizer.colocarItems(user.getRoles(), model);
 
         context.render("comunidades.hbs", model);
     }
 
+    public void indexCreacion(Context context) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("username", context.cookie("username"));
+        Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
+        model.put("UserId",context.cookie("id"));
+
+        List<Comunidad> comunidades = repositorioComunidad.findAll();
+        model.put("comunidades", comunidades);
+        model.put("editarComunidad", user.tienePermiso("editarComunidad")); // RolX es el rol necesario
+
+        List<Servicio> intereses = repositorioServicio.findAll();
+        model.put("intereses", intereses);
+
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
+
+        context.render("crearComunidad.hbs", model);
+    }
+
+
     public void eliminarComunidad(Context context) {
         int comunidadId = Integer.parseInt(context.pathParam("id"));
         repositorioComunidad.deleteById(comunidadId);
         context.redirect("/comunidades");
+    }
+
+    public void crearComunidad(Context context) {
+
+        Comunidad nuevaComunidad = new Comunidad();
+        List<Servicio> interesesSeleccionados = new ArrayList<>();
+        List<Usuario> admins = new ArrayList<>();
+        List<Miembro> miembros = new ArrayList<>();
+
+        if(!Objects.equals(context.formParam("nombreComunidad"), "")) {
+            nuevaComunidad.setNombre(context.formParam("nombreComunidad"));
+        }
+        for (Servicio interes : repositorioServicio.findAll()) {
+            String checkboxParam = context.formParam(Integer.toString(interes.getId()));
+            if (checkboxParam != null) {
+                interesesSeleccionados.add(interes);
+            }
+        }
+        Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
+        admins.add(user);
+        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(user.getId());
+        miembros.add(miembro);
+        nuevaComunidad.setIntereses(interesesSeleccionados);
+        nuevaComunidad.setAdmins(admins);
+        nuevaComunidad.setMiembros(miembros);
+        int idComunidad = repositorioComunidad.save(nuevaComunidad);
+
+
+        context.redirect("/comunidad/"+idComunidad);
     }
 
     public void mostrarComunidad(Context context) {
@@ -136,7 +189,6 @@ public class ComunidadController {
         Miembro miembro = comunidad.getMiembro(miembroId);
         comunidad.addAdmins(miembro.getUsuario());
         repositorioComunidad.update(comunidad);
-
         context.redirect("/comunidad/" + comunidadId);
     }
     public void removerAdmin(Context context) {

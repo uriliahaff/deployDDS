@@ -24,13 +24,8 @@ public class Comunidad {
     @Setter
     @Column(name = "nombre", nullable = false)
     private String nombre;
-/*
-    @ManyToMany
-    @JoinTable(
-            name = "miembro_comunidad",
-            joinColumns = @JoinColumn(name = "miembro_id"),
-            inverseJoinColumns = @JoinColumn(name = "comunidad_id")
-    )*/
+
+
     @ManyToMany(mappedBy = "comunidades")
     private List<Miembro> miembros = new ArrayList<>();
 

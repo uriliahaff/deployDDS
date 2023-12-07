@@ -11,7 +11,6 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Grado de Confianza</th>
                 <th>Número de Miembros</th>
@@ -22,7 +21,6 @@
             <tbody>
             {{#each comunidades}}
             <tr>
-                <td>{{this.id}}</td>
                 <td>
                     <a href="/comunidad/{{this.id}}">
                         {{this.nombre}}
@@ -53,6 +51,8 @@
         </table>
     </div>
 </div>
+<a role="button" class="btn btn-primary m-4" href="/comunidades/crear"><i class="fa fa-plus mr-2"></i>Crear comunidad</a>
+
 </div>
 {{/partial}}
 {{> base }}

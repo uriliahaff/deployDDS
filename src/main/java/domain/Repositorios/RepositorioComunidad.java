@@ -17,10 +17,12 @@ public class RepositorioComunidad
 {
     private static EntityManager entityManager = EntityManagerProvider.getInstance().getEntityManager();
 
-    public void save(Comunidad comunidad) {
+    public int save(Comunidad comunidad) {
         entityManager.getTransaction().begin();
         entityManager.persist(comunidad);
         entityManager.getTransaction().commit();
+
+        return comunidad.getId();
     }
 
     public void update(Comunidad comunidad) {
