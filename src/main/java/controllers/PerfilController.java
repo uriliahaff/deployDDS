@@ -74,7 +74,11 @@ public class PerfilController
     private void nuevoRenderPerfilMiembros(Context context, Miembro miembro, Usuario user)
     {
         Map<String, Object> model = new HashMap<>();
-        model.put("editarMiembro", user.tienePermiso("editarMiembro"));
+
+        if(miembro.getUsuario() == user){
+            model.put("editarMiembro",true);
+        }
+
         model.put("profileId",user.getId());
         model.put("username", context.cookie("username"));
         miembro.getServiciosQueAfectan().size();
@@ -94,58 +98,6 @@ public class PerfilController
         context.render("miembroPerfil.hbs", model);
     }
 
-    private void renderPerfilMiembro(Context context)
-    {
-        Map<String, Object> model = new HashMap<>();
-
-        int userId = Integer.parseInt(context.cookie("id"));
-
-        int profileUserId = Integer.parseInt(context.pathParam("id"));
-
-        Usuario user = repositorioUsuario.findUsuarioById(userId);
-        System.out.println(profileUserId);
-        model.put("editarMiembro", userId==profileUserId || user.tienePermiso("editarMiembro"));
-
-        model.put("profileId",userId);
-
-        model.put("username", context.cookie("username"));
-
-        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
-        miembro.getServiciosQueAfectan().size();
-        model.put("miembro",miembro);
-        model.put("showMedioPreferido", miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido().name());
-
-        model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
-
-        model.put("provincias",repositorioDireccion.findAllProvincias());
-        model.put("localidades",repositorioDireccion.findAllLocalidades());
-        model.put("municipios",repositorioDireccion.findAllMunicipios());
-
-        //model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
-
-        model.put("listaServicios",repositorioServicio.findAll());
-        try {
-            // Configura el loader para buscar plantillas en el directorio /templates
-            Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
-
-            Template templateCrearDireccion = handlebars.compile("common_CrearDireccion");
-            String formBodyContent = templateCrearDireccion.apply(model);
-            model.put("crearDireccion", formBodyContent);
-
-
-            // Compila el contenido del partial 'detalle_comunidad' y pásalo como 'body'
-            Template template = handlebars.compile("Miembro_Perfil");
-            String bodyContent = template.apply(model);
-            model.put("body", bodyContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            context.status(500).result("Error al procesar la plantilla.");
-            return;
-        }
-
-        context.render("layout_comun.hbs", model);
-
-    }
 
 
     public void addLugarDeInteres(Context context)
@@ -179,7 +131,7 @@ public class PerfilController
         miembro.addLugarDeInteres(direccion);
         repositorioUsuario.updateMiembro(miembro);
 
-        context.redirect("/perfil/"+context.pathParam("id"));
+        context.redirect("/perfil");
     }
 
     public void addServicioDeInteres(Context context)
@@ -191,7 +143,7 @@ public class PerfilController
         Servicio servicio = repositorioServicio.findServicioById(servicioId);
         miembro.addServicioDeInteres(servicio);
         repositorioUsuario.updateMiembro(miembro);
-        context.redirect("/perfil/"+context.pathParam("id"));
+        context.redirect("/perfil");
     }
 
     public void agregarHorario(Context context) {
@@ -213,7 +165,7 @@ public class PerfilController
 
             }
 
-            context.redirect("/perfil/" + miembroId);
+            context.redirect("/perfil");
         } catch (NumberFormatException e) {
             context.status(400).result("Formato de hora no válido.");
         } catch (Exception e) {
@@ -234,7 +186,7 @@ public class PerfilController
                 repositorioUsuario.updateMiembro(miembro);
             }
 
-            context.redirect("/perfil/" + miembroId);
+            context.redirect("/perfil" );
         } catch (NumberFormatException e) {
             context.status(400).result("Formato de horario no válido.");
         } catch (Exception e) {
@@ -262,7 +214,7 @@ public class PerfilController
         repositorioUsuario.updateMiembro(miembro);
 
         repositorioUsuario.updateMiembro(miembro);
-        context.redirect("/perfil/"+ miembroId); // Redirigir al usuario
+        context.redirect("/perfil"); // Redirigir al usuario
     }
 
 }

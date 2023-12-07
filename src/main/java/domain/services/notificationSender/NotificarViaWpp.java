@@ -15,6 +15,6 @@ private WwpSender wwpSender;
 
     @Override
     public String name() {
-        return "whatsapp";
+        return "Whatsapp";
     }
 }

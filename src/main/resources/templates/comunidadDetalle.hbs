@@ -146,7 +146,10 @@
                 <form action="/comunidad/join/{{comunidad.id}}" method="post">
                     <button type="submit" class="btn btn-success">Unirse</button>
                 </form>
-
+                {{else}}
+                <form action="/comunidad/disjoin/{{comunidad.id}}" method="post">
+                     <button type="submit" class="btn btn-danger">Abandonar</button>
+                </form>
             {{/if}}
     </div>
 </div>

@@ -60,7 +60,7 @@ public class Router {
 
             Server.app().get("/rankings",
                     ((RankingController) FactoryController.controller("rankings"))::index,
-                    adminEntidad, adminOrganismo);
+                    admin, adminEntidad, adminOrganismo);
             Server.app().post("/generarRankings",
                     ((RankingController) FactoryController.controller("rankings"))::generarRanking,
                     adminEntidad, adminOrganismo);
@@ -120,6 +120,7 @@ public class Router {
             Server.app().post("/comunidad/{comunidadId}/ascender/{miembroId}", ((ComunidadController) FactoryController.controller("comunidad"))::ascenderAAdmin);
             Server.app().post("/comunidad/removerAdmin", ((ComunidadController) FactoryController.controller("comunidad"))::removerAdmin);
             Server.app().post("/comunidad/join/{comunidadId}", ((ComunidadController) FactoryController.controller("comunidad"))::joinComunidad);
+            Server.app().post("/comunidad/disjoin/{comunidadId}", ((ComunidadController) FactoryController.controller("comunidad"))::disJoinComunidad);
             Server.app().post("/comunidad/addInteres", ((ComunidadController) FactoryController.controller("comunidad"))::addInteres);
             Server.app().post("/comunidad/removerInteres", ((ComunidadController) FactoryController.controller("comunidad"))::removerInteres);
 

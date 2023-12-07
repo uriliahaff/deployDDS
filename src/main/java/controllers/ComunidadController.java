@@ -219,10 +219,23 @@ public class ComunidadController {
 
         repositorioComunidad.update(comunidad);
         repositorioUsuario.updateMiembro(miembro);
+        context.redirect("/comunidad/" + comunidadId);
+    }
 
+    public void disJoinComunidad(Context context)
+    {
+        int comunidadId = Integer.parseInt(context.pathParam("comunidadId"));
+        int userId = Integer.parseInt(context.cookie("id"));
+
+        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
+        Comunidad comunidad = repositorioComunidad.find(comunidadId);
+
+        comunidad.removeMiembro(miembro);
+        miembro.removeComunidad(comunidad);
+        repositorioUsuario.updateMiembro(miembro);
+        repositorioComunidad.update(comunidad);
 
         context.redirect("/comunidad/" + comunidadId);
-
     }
 
     public void addInteres(Context context)

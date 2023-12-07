@@ -11,13 +11,13 @@
 <div class="card shadow mb-4">
 
 <div class="card-body">
-    Actual: {{showMedioPreferido}}
+    Actual: <strong> {{showMedioPreferido}} </strong>
     <form action="/perfil/{{profileId}}/updateNotificationPreferences" method="POST">
         <div>
             <input type="radio" id="preferenciaEmail" name="preferencia" value="email">
             <label for="preferenciaEmail">Correo Electrónico</label>
             <input type="radio" id="preferenciaTelefono" name="preferencia" value="telefono">
-            <label for="preferenciaTelefono">Teléfono</label>
+            <label for="preferenciaTelefono">Whatsapp</label>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar Preferencias</button>
     </form>
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </select>
             </div>
 
-            <button type="submit" id="agregarServicioBtn" class="btn btn-primary" disabled>Agregar Servicio</button>
+            <button type="submit" id="agregarServicioBtn" class="btn btn-primary mt-3" disabled>Agregar Servicio</button>
         </form>
         {{/if}}
     </div>
@@ -107,9 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 {{#if editarMiembro}}
-<div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Comunidades Participantes</h6>
-</div>
     <div class="card-body">
 
         <form id="formDireccion" action="/perfil/{{profileId}}/addLugarInteres" method="POST">
@@ -125,11 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTableHorarios" width="100%" cellspacing="0">
+            <table class="table table-bordered text-center" id="dataTableHorarios" width="100%" cellspacing="0">
                 <thead>
                 <tr>
                     <th>Horario</th>
-                    <th>Acciones</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -161,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 {{/if}}
-</div>
 <div class="card shadow mb-4">
 
     <div class="card-header py-3">
@@ -178,13 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <tbody>
             {{#each miembro.comunidades}}
             <tr>
-                <td>{{this.nombre}}</td>
+                <td><a href="/comunidad/{{this.id}}">{{this.nombre}}</a></td>
             </tr>
 
             {{/each}}
             </tbody>
         </table>
     </div>
+</div>
 </div>
 </div>
 <script>

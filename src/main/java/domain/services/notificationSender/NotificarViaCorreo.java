@@ -19,7 +19,7 @@ public NotificarViaCorreo()
 
     @Override
     public String name() {
-        return "correo";
+        return "Correo Electronico";
     }
 
 }

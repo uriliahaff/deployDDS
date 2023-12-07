@@ -3,6 +3,7 @@ package controllers;
 import domain.Repositorios.RepositorioEntidadPrestadoraOrganismoControl;
 import domain.Repositorios.RepositorioLeaderBoard;
 import domain.Repositorios.RepositorioUsuario;
+import domain.Usuarios.Rol;
 import domain.Usuarios.Usuario;
 import domain.rankings.Leaderboard.LeaderBoardType;
 import domain.rankings.Leaderboard.Leaderboard;
@@ -43,6 +44,8 @@ public class RankingController {
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
 
         navBarVisualizer.colocarItems(user.getRoles(), model);
+
+        model.put("admin", user.getRoles().stream().anyMatch(rol -> "admin".equals(rol.getNombre())));
 
         context.render("rankings.hbs", model);
     }
