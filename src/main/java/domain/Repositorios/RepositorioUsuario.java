@@ -160,10 +160,6 @@ public class RepositorioUsuario {
             for (OrganismoDeControl organismo : organismosDeControl) {
                 entityManager.persist(organismo);
 
-                if (i % 20 == 0) { // Flush and clear in batches
-                    entityManager.flush();
-                    entityManager.clear();
-                }
                 i++;
             }
 
@@ -176,17 +172,13 @@ public class RepositorioUsuario {
         }
     }
     public void saveEntidadesPrestadoras(List<EntidadPrestadora> entidadesPrestadoras) {
-        entityManager.getTransaction().begin();
 
         try {
+            entityManager.getTransaction().begin();
             int i = 0;
             for (EntidadPrestadora entidadPrestadora : entidadesPrestadoras) {
                 entityManager.persist(entidadPrestadora);
 
-                if (i % 20 == 0) { // Flush and clear in batches
-                    entityManager.flush();
-                    entityManager.clear();
-                }
                 i++;
             }
 

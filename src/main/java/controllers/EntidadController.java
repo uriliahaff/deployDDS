@@ -48,23 +48,9 @@ public class EntidadController
 
 
         model.put("tipos",repositorioEntidad.findAllTipoEntidad());
-        try {
-            // Configura el loader para buscar plantillas en el directorio /templates
-            Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
 
-            // Compila el contenido del partial 'incidentes_template' y pásalo como 'body'
-            Template template = handlebars.compile("entidades");
-            String bodyContent = template.apply(model);
-            model.put("body", bodyContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Es importante manejar esta excepción adecuadamente
-            context.status(500).result("Error al procesar la plantilla de incidentes.");
-            return; // Sal del método aquí si no quieres procesar más el request debido al error
-        }
 
-        // Renderiza la plantilla común con el contenido incluido
-        context.render("layout_comun.hbs", model);
+        context.render("entidades.hbs", model);
     }
     public void indexEntidad(Context context)
     {
@@ -86,26 +72,7 @@ public class EntidadController
         model.put("provincias",repositorioDireccion.findAllProvincias());
         model.put("localidades",repositorioDireccion.findAllLocalidades());
         model.put("municipios",repositorioDireccion.findAllMunicipios());
-        /*try {
-            // Configura el loader para buscar plantillas en el directorio /templates
-            Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
 
-
-            Template templateCrearDireccion = handlebars.compile("common_CrearDireccion");
-            String formBodyContent = templateCrearDireccion.apply(model);
-            model.put("crearDireccion", formBodyContent);
-            // Compila el contenido del partial 'incidentes_template' y pásalo como 'body'
-            Template template = handlebars.compile("entidad_detalle");
-            String bodyContent = template.apply(model);
-            model.put("body", bodyContent);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Es importante manejar esta excepción adecuadamente
-            context.status(500).result("Error al procesar la plantilla de incidentes.");
-            return; // Sal del método aquí si no quieres procesar más el request debido al error
-        }*/
         Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
         try {
             model.put("crearDireccion", handlebars.compile("common_CrearDireccion").apply(model));
@@ -151,7 +118,7 @@ public class EntidadController
 
         Entidad entidad = new Entidad(nombreEntidad, repositorioEntidad.findTipoEntidad(tipoEntidadId), emailEntidad, descripcionEntidad);
         repositorioEntidad.save(entidad);
-        context.redirect("/entidades");
+        context.redirect("/admin/entidades");
     }
     public void crearEstablecimiento(Context context)
     {

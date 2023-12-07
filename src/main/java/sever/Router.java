@@ -94,6 +94,9 @@ public class Router {
                     ,admin);
 
 
+            Server.app().get("/admin/entidades", ((EntidadController) FactoryController.controller("entidad"))::indexEntidades,
+                    admin);
+
 
             Server.app().get("/aperturaIncidentes", ((IncidenteController) FactoryController.controller("incidentes"))::aperturaIncidentes);
             Server.app().post("/aperturaIncidente", ((IncidenteController) FactoryController.controller("incidentes"))::abrirIncidente);
@@ -124,7 +127,7 @@ public class Router {
             Server.app().post("/perfil/{idMiembro}/borrarHorario", ((PerfilController) FactoryController.controller("perfil"))::borrarHorario);
             Server.app().post("/perfil/{idMiembro}/updateNotificationPreferences", ((PerfilController) FactoryController.controller("perfil"))::guardarMedioPreferido);
 
-            //Server.app().get("/entidades", ((EntidadController) FactoryController.controller("entidad"))::indexEntidades); SE PUEDE USAR LA DE cargarENTIDADES
+
             Server.app().get("/entidad/{id}", ((EntidadController) FactoryController.controller("entidad"))::indexEntidad);
             Server.app().post("/entidad/{id}/crearEstablecimiento", ((EntidadController) FactoryController.controller("entidad"))::crearEstablecimiento);
             Server.app().post("/entidades/crearEntidad", ((EntidadController) FactoryController.controller("entidad"))::crearEntidad);

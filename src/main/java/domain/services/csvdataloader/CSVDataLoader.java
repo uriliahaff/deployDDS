@@ -8,6 +8,8 @@ import domain.Repositorios.RepositorioUsuario;
 import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.OrganismoDeControl;
 import domain.Usuarios.Usuario;
+import domain.entidades.Entidad;
+import domain.servicios.Servicio;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -29,23 +31,21 @@ public class CSVDataLoader {
                     continue;
                 }
 
-                // Aquí debes mapear los campos del archivo CSV a los atributos de EntidadPrestadora
-                int entidad_id = Integer.parseInt(record[0]);
-                int usuario_id = Integer.parseInt(record[1]);
+                String nombreEntidadPrestadora = record[0];
+                String desripcionEntidadPrestadora = record[1];
                 String mail = record[2];
-                String nombre = record[3];
-                String descripcion = record[4];
-                // Mapea los demás campos...
+                String username = record[3];
+                String nombreEntidad = record[4];
 
                 // Crea un objeto EntidadPrestadora y agrégalo a la lista
                 EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
-               entidadPrestadora.setEntidad(repositorioEntidad.findEntidadById(entidad_id));
-                entidadPrestadora.setUsuario(repositorioUsuario.findUsuarioById(usuario_id));
-                entidadPrestadora.setNombre(nombre);
-                entidadPrestadora.setDescripcion(descripcion);
+               Usuario userEntidadPrestadora = repositorioUsuario.findUsuarioByUsername(username);
+               Entidad entidad = repositorioEntidad.findEntidadByName(nombreEntidad);
+               entidadPrestadora.setUsuario(userEntidadPrestadora);
+               entidadPrestadora.setEntidad(entidad);
+                entidadPrestadora.setNombre(nombreEntidadPrestadora);
+                entidadPrestadora.setDescripcion(desripcionEntidadPrestadora);
                 entidadPrestadora.setCorreoElectronicoResponsable(mail);
-                // Asigna los demás campos...
-
                 entidadesPrestadoras.add(entidadPrestadora);
             }
 
@@ -73,20 +73,20 @@ public class CSVDataLoader {
                     continue;
                 }
 
-                // Aquí debes mapear los campos del archivo CSV a los atributos de EntidadPrestadora
-                int servicio_id = Integer.parseInt(record[0]);
-                int usuario_id = Integer.parseInt(record[1]);
+                String nombreOrganismoControl = record[0];
+                String desripcionOrganismoControl = record[1];
                 String mail = record[2];
-                String nombre = record[3];
-                String descripcion = record[4];
-                // Mapea los demás campos...
+                String username = record[3];
+                String nombreServicio = record[4];
 
-                // Crea un objeto EntidadPrestadora y agrégalo a la lista
+                // Crea un objeto ORganismoControl y agrégalo a la lista
                 OrganismoDeControl organismoDeControl = new OrganismoDeControl();
-                organismoDeControl.setServicio(repositorioServicio.findServicioById(servicio_id));
-                organismoDeControl.setUsuario(repositorioUsuario.findUsuarioById(usuario_id));
-                organismoDeControl.setNombre(nombre);
-                organismoDeControl.setDescripcion(descripcion);
+                Usuario userServicio = repositorioUsuario.findUsuarioByUsername(username);
+                Servicio servicio = repositorioServicio.findServicioByName(nombreServicio);
+                organismoDeControl.setUsuario(userServicio);
+                organismoDeControl.setServicio(servicio);
+                organismoDeControl.setNombre(nombreOrganismoControl);
+                organismoDeControl.setDescripcion(desripcionOrganismoControl);
                 organismoDeControl.setCorreoElectronicoResponsable(mail);
                 // Asigna los demás campos...
 

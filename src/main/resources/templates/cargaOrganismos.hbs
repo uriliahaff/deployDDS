@@ -15,44 +15,44 @@
                                                         <table class="table text-center mb-0" id="dataTable" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
-                                                                <th>Servicio</th>
-                                                                <th>Username</th>
+                                                                <th>Nombre (de Organismo de Control)</th>
+                                                                <th>Descripcion (de Organismo de Control)</th>
                                                                 <th>Correo electronico responsable</th>
-                                                                <th>Nombre</th>
-                                                                <th>Descripcion</th>
+                                                                <th>Username (*)</th>
+                                                                <th>Nombre (de Servicio) (**)</th>
                                                             </tr>
                                                         </thead>
                                                         </table>
+                                                    <p><strong>* </strong><a href="/admin/usuarios">Listado de usuario.</a></p>
+                                                    <p><strong>** </strong><a href="/admin/servicios">Listado de servicios.</a></p>
                                                     </div>
                         <div class="card-body tabla">
                             <button type="button" class="btn btn-primary mb-3 btnCSv" data-bs-toggle="modal" data-bs-target="#csvModal"><i class="fa fa-upload mr-1"></i>Cargar CSV</button>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Servicio</th>
-                                            <th>Descripcion</th>
-                                            <th>Correo Electronico</th>
-                                            <th>Administrador</th>
-                                            <th></th>
+                                                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                   <thead>
+                                                                       <tr>
+                                                                           <th>Nombre de Organismo de Control</th>
+                                                                           <th>Descripcion de Organismo de Control</th>
+                                                                           <th>Username de Organismo de Control</th>
+                                                                           <th>Correo Electronico de Responsable</th>
+                                                                           <th>Servicio</th>
 
-                                        </tr>
-                                    </thead>
+                                                                       </tr>
+                                                                   </thead>
 
-                                    <tbody>
-                                          {{#each organismos}}
-                                             <tr>
-                                                 <td><a href="/perfil/organismo/{{this.id}}">{{this.nombre}}</a></td>
-                                                <td>{{this.servicio.nombre}}</td>
-                                                <td>{{this.descripcion}}</td>
-                                                <td>{{this.correoElectronicoResponsable}}</td>
-                                                <td>{{this.usuario.username}}</td>
-                                                <td></td>
-                                             </tr>
-                                         {{/each}}
-                                    </tbody>
-                                </table>
+                                                                   <tbody>
+                                                                       {{#each organismos}}
+                                                                            <tr>
+                                                                               <td>{{this.nombre}}</td>
+                                                                               <td>{{this.descripcion}}</td>
+                                                                               <td>{{this.usuario.username}}</td>
+                                                                               <td>{{this.correoElectronicoResponsable}}</td>
+                                                                             <td>{{this.servicio.nombre}}</td>
+                                                                            </tr>
+                                                                        {{/each}}
+                                                                   </tbody>
+                                                               </table>
                             </div>
                         </div>
                     </div>

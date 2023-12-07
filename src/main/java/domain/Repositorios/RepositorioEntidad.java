@@ -10,6 +10,7 @@ import domain.entidades.TipoEntidad;
 import domain.other.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
@@ -53,6 +54,19 @@ public class RepositorioEntidad
 
     public Entidad findEntidadesById(int id) {
         return entityManager.find(Entidad.class, id);
+    }
+
+    public Entidad findEntidadByName(String nombre) {
+        try {
+            return entityManager.createQuery("SELECT u FROM Entidad u WHERE u.nombre = :nombre", Entidad.class)
+                    .setParameter("nombre", nombre)
+                    .setMaxResults(1)
+                    .getSingleResult();
+
+        } catch (NoResultException e) {
+            // Manejar el caso en que no se encuentra ningún usuario con el nombre de usuario dado
+            return null;
+        }
     }
     public static List<Entidad> findAllEntidadByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {

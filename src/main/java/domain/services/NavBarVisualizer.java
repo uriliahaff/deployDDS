@@ -43,6 +43,11 @@ public class NavBarVisualizer {
                             "                                <span>Servicios</span></a>\n" +
                             "                        </li>")
                     .append("<li class=\"nav-item \">\n" +
+                            "                            <a class=\"nav-link\" href=\"/admin/entidades\">\n" +
+                            "                                <i class=\"fas fa-fw fa-person-booth\"></i>\n" +
+                            "                                <span>Entidades</span></a>\n" +
+                            "                        </li>")
+                    .append("<li class=\"nav-item \">\n" +
                             "                            <a class=\"nav-link\" href=\"/admin/roles\">\n" +
                             "                                <i class=\"fas fa-fw fa-users\"></i>\n" +
                             "                                <span>Roles</span></a>\n" +

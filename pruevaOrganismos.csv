@@ -1,6 +1,6 @@
-servicio_id,usuario_id,correo_electronico_responsable,nombre,descripcion
-1,1,responsable1@example.com,Entidad 1,Descripción 1
-1,1,responsable2@example.com,Entidad 2,Descripción 2
-1,1,responsable3@example.com,Entidad 3,Descripción 3
-1,1,responsable4@example.com,Entidad 4,Descripción 4
-1,1,responsable5@example.com,Entidad 5,Descripción 5
+nombre_organismo_control,descripcion,correo_electronico,username,nombre_servicio
+Organismo 1,Organismo 5,responsable1@example.com,uriadmin,Servicio 1
+Organismo 2,Organismo 5,responsable2@example.com,uriadmin,Servicio 1
+Organismo 3,Organismo 5,responsable3@example.com,uriadmin,Servicio 1
+Organismo 4,Organismo 5,responsable4@example.com,uriadmin,Servicio 1
+Organismo 5,Organismo 5,responsable5@example.com,uriadmin,Servicio 1

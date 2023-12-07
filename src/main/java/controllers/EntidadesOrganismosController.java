@@ -69,7 +69,7 @@ public class EntidadesOrganismosController {
 
                 repositorioUsuario.saveEntidadesPrestadoras(entidadesACargar);
 
-                context.redirect("/entidades");
+                context.redirect("/admin/cargaEntidades");
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -90,7 +90,7 @@ public class EntidadesOrganismosController {
                 repositorioUsuario.saveOrganismosDeControl(organismosDeControl);
 
 
-                context.redirect("/cargaOrganismos");
+                context.redirect("/admin/cargaOrganismos");
 
             } catch (IOException e) {
                 throw new RuntimeException(e);

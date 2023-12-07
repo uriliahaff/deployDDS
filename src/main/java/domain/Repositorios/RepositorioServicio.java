@@ -9,6 +9,7 @@ import domain.servicios.PrestacionDeServicio;
 import domain.servicios.Servicio;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
@@ -70,6 +71,19 @@ public class RepositorioServicio
 
     public List<PrestacionDeServicio> buscarTodasLasPrestaciones() {
         return entityManager.createQuery("from " + PrestacionDeServicio.class.getName()).getResultList();
+    }
+
+    public Servicio findServicioByName(String nombre) {
+        try {
+            return entityManager.createQuery("SELECT u FROM Servicio u WHERE u.nombre = :nombre", Servicio.class)
+                    .setParameter("nombre", nombre)
+                    .setMaxResults(1)
+                    .getSingleResult();
+
+        } catch (NoResultException e) {
+            // Manejar el caso en que no se encuentra ningún usuario con el nombre de usuario dado
+            return null;
+        }
     }
 
 }

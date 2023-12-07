@@ -15,14 +15,16 @@
                                                         <table class="table text-center mb-0" id="dataTable" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
-                                                                <th>Entidad</th>
-                                                                <th>Username</th>
+                                                                <th>Nombre (de entidad prestadora)</th>
+                                                                <th>Descripcion (de entidad prestadora)</th>
                                                                 <th>Correo electronico responsable</th>
-                                                                <th>Nombre</th>
-                                                                <th>Descripcion</th>
+                                                                <th>Username (*)</th>
+                                                                <th>Nombre (de Entidad) (**)</th>
                                                             </tr>
                                                         </thead>
                                                         </table>
+                                                    <p><strong>* </strong><a href="/admin/usuarios">Listado de usuario.</a></p>
+                                                    <p><strong>** </strong><a href="/admin/entidades">Listado de entidades.</a></p>
                                                     </div>
                         <div class="card-body tabla">
                             <button type="button" class="btn btn-primary mb-3 btnCSv" data-bs-toggle="modal" data-bs-target="#csvModal"><i class="fa fa-upload mr-1"></i>Cargar CSV</button>
@@ -30,12 +32,11 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
+                                            <th>Nombre de Entidad Prestadora</th>
+                                            <th>Descripcion de Entidad Prestadora</th>
+                                            <th>Username de Entidad Prestadora</th>
+                                            <th>Correo Electronico de Responsable</th>
                                             <th>Entidad</th>
-                                            <th>Descripcion</th>
-                                            <th>Correo Electronico</th>
-                                            <th>Administrador</th>
-                                            <th></th>
 
                                         </tr>
                                     </thead>
@@ -43,12 +44,11 @@
                                     <tbody>
                                         {{#each entidades}}
                                              <tr>
-                                                 <td><a href="/perfil/entidad/{{this.id}}">{{this.nombre}}</a></td>
-                                                <td>{{this.entidad.nombre}}</td>
+                                                <td>{{this.nombre}}</td>
                                                 <td>{{this.descripcion}}</td>
-                                                <td>{{this.correoElectronicoResponsable}}</td>
                                                 <td>{{this.usuario.username}}</td>
-                                                <td></td>
+                                                <td>{{this.correoElectronicoResponsable}}</td>
+                                              <td><a href="/perfil/entidad/{{this.entidad.id}}">{{this.entidad.nombre}}</a></td>
                                              </tr>
                                          {{/each}}
                                     </tbody>

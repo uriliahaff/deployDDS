@@ -1,6 +1,3 @@
-entidad_id,usuario_id,correo_electronico_responsable,nombre,descripcion
-2,1,responsable1@example.com,Entidad 1,Descripción 1
-2,1,responsable2@example.com,Entidad 2,Descripción 2
-2,1,responsable3@example.com,Entidad 3,Descripción 3
-2,1,responsable4@example.com,Entidad 4,Descripción 4
-2,1,responsable5@example.com,Entidad 5,Descripción 5
+nombre_entidad_prestadora,descripcion,correo_electronico,username,nombre_entidad
+EntidadPrestadora1,Descripción de la EntidadPrestadora1,responsable1@example.com,uriadmin,Entidad 1
+EntidadPrestadora2,Descripción de la EntidadPrestadora2,responsable2@example.com,uriadmin,Entidad 2
