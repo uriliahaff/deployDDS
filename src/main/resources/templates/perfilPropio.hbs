@@ -247,7 +247,7 @@
                            <!-- Dropdown para Provincia -->
                            <div class="form-group">
                                <label for="provincia">Provincia:</label>
-                               <select class="form-control" id="provincia{{this.nombre}}" name="provincia{{this.nombre}}" required onchange="habilitarMunicipio()">
+                               <select class="form-control" id="provincia{{this.id}}" name="provincia{{this.id}}" required onchange="habilitarMunicipio({{this.id}})">
                                    <option value="">Seleccione una Provincia</option>
                                    {{#each provincias}}
                                    <option value="{{this.id}}">{{this.nombre}}</option>
@@ -258,7 +258,7 @@
                                    <!-- Dropdown para Municipio, inicialmente deshabilitado -->
                            <div class="form-group">
                            <label for="municipio">Municipio:</label>
-                           <select class="form-control" id="municipio{{this.nombre}}" name="municipio{{this.nombre}}" disabled onchange="habilitarLocalidad()">
+                           <select class="form-control" id="municipio{{this.id}}" name="municipio{{this.id}}" disabled onchange="habilitarLocalidad({{this.id}})">
                                <option value="">Primero seleccione una Provincia</option>
                                {{#each municipios}}
                                <option value="{{this.id}}">{{this.nombre}}</option>
@@ -269,7 +269,7 @@
                                    <!-- Dropdown para Localidad, inicialmente deshabilitado -->
                            <div class="form-group">
                            <label for="localidad">Localidad:</label>
-                           <select class="form-control" id="localidad{{this.nombre}}" name="localidad{{this.nombre}}" disabled>
+                           <select class="form-control" id="localidad{{this.id}}" name="localidad{{this.id}}" disabled>
                                <option value="">Primero seleccione un Municipio</option>
                                {{#each localidades}}
                                <option value="{{this.id}}">{{this.nombre}}</option>
@@ -278,24 +278,24 @@
                            </div>
 
                        <script>
-                           function habilitarMunicipio() {
-                               var provinciaSeleccionada = document.getElementById("provincia{{this.nombre}}").value;
-                               var municipioSelect = document.getElementById("municipio{{this.nombre}}");
-                               var botonSubmit = document.getElementById("botonSubmit{{this.nombre}}");
+                           function habilitarMunicipio(id) {
+                               var provinciaSeleccionada = document.getElementById("provincia"+id).value;
+                               var municipioSelect = document.getElementById("municipio"+id);
+                              // var botonSubmit = document.getElementById("botonSubmit{{this.nombre}}");
 
                                if (provinciaSeleccionada) {
                                    municipioSelect.disabled = false;
-                                   botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
+                                  // botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
                                } else {
                                    municipioSelect.disabled = true;
-                                   document.getElementById("localidad").disabled = true; // También deshabilita localidad
-                                   botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
+                                   document.getElementById("localidad"+id).disabled = true; // También deshabilita localidad
+                                 //  botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
                                }
                            }
 
-                           function habilitarLocalidad() {
-                               var municipioSeleccionado = document.getElementById("municipio").value;
-                               var localidadSelect = document.getElementById("localidad");
+                           function habilitarLocalidad(id) {
+                               var municipioSeleccionado = document.getElementById("municipio"+id).value;
+                               var localidadSelect = document.getElementById("localidad"+id);
 
                                if (municipioSeleccionado) {
                                    localidadSelect.disabled = false;
