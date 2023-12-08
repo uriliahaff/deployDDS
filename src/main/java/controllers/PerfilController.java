@@ -11,6 +11,7 @@ import domain.Usuarios.Comunidades.ConfiguracionNotificacionDeIncidentes;
 import domain.Usuarios.Comunidades.Miembro;
 import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.OrganismoDeControl;
+import domain.Usuarios.Rol;
 import domain.Usuarios.Usuario;
 import domain.localizaciones.Direccion;
 import domain.services.NavBarVisualizer;
@@ -73,7 +74,6 @@ public class PerfilController
        {
            model.put("esOrganismoControl",true);
            model.put("organismosDeControl",organismosDeControl);
-
        }
 
        List<EntidadPrestadora> entidadPrestadoras = repositorioUsuario.findEntidadesPrestadoraslByUserId(profileUserId);
@@ -95,7 +95,11 @@ public class PerfilController
            model.put("telefonoMiembro",miembro.getTelefono());
            model.put("showMedioPreferido",miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido().name());
            model.put("miembro",miembro);
-           model.put("listaServicios",repositorioServicio.findAll());
+           List<Servicio> servicios = repositorioServicio.findAll();
+           for (Servicio servicioUsuario : miembro.getServiciosQueAfectan()) {
+               servicios.removeIf(servicio -> servicio.getId() == servicioUsuario.getId());
+           }
+           model.put("listaServiciosNoAfectan",servicios);
            model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
 
        }
@@ -125,7 +129,13 @@ public class PerfilController
         model.put("provincias",repositorioDireccion.findAllProvincias());
         model.put("localidades",repositorioDireccion.findAllLocalidades());
         model.put("municipios",repositorioDireccion.findAllMunicipios());
-        model.put("listaServicios",repositorioServicio.findAll());
+
+
+        List<Servicio> servicios = repositorioServicio.findAll();
+        for (Servicio servicioUsuario : miembro.getServiciosQueAfectan()) {
+            servicios.removeIf(servicio -> servicio.getId() == servicioUsuario.getId());
+        }
+        model.put("listaServiciosNoAfectan",servicios);
 
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
         navBarVisualizer.colocarItems(user.getRoles(), model);
@@ -180,6 +190,19 @@ public class PerfilController
         repositorioUsuario.updateMiembro(miembro);
         context.redirect("/perfil");
     }
+
+    public void borrarServicio(Context context)
+    {
+        int miembroId = Integer.parseInt(context.pathParam("id")); // Asume que el ID del miembro está en la ruta
+        int servicioId = Integer.parseInt(context.pathParam("idServicio"));
+
+        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(miembroId);
+        Servicio servicio = repositorioServicio.findServicioById(servicioId);
+        miembro.removeServicioDeInteres(servicio);
+        repositorioUsuario.updateMiembro(miembro);
+        context.redirect("/perfil");
+    }
+
 
     public void agregarHorario(Context context) {
         try {

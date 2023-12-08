@@ -132,6 +132,7 @@ public class Router {
 
             Server.app().post("/perfil/{id}/addLugarInteres", ((PerfilController) FactoryController.controller("perfil"))::addLugarDeInteres);
             Server.app().post("/perfil/{id}/addService", ((PerfilController) FactoryController.controller("perfil"))::addServicioDeInteres);
+            Server.app().post("/perfil/{id}/borrarServicio/{idServicio}", ((PerfilController) FactoryController.controller("perfil"))::borrarServicio);
             Server.app().post("/perfil/{idMiembro}/agregarHorario", ((PerfilController) FactoryController.controller("perfil"))::agregarHorario);
             Server.app().post("/perfil/{idMiembro}/borrarHorario", ((PerfilController) FactoryController.controller("perfil"))::borrarHorario);
             Server.app().post("/perfil/{idMiembro}/updateNotificationPreferences", ((PerfilController) FactoryController.controller("perfil"))::guardarMedioPreferido);

@@ -41,6 +41,7 @@
                 <tr>
                     <th>Nombre del Servicio</th>
                     <th>Descripción</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,13 @@
                 <tr>
                     <td>{{this.nombre}}</td>
                     <td>{{this.descripcion}}</td>
+                    <td>
+
+                                <form id="formBorrarServicio" action="/perfil/{{userID}}/borrarServicio/{{this.id}}" method="POST">
+                                    <button type="submit"  class="btn btn-danger">Borrar</button>
+                                </form>
+
+                    </td>
                 </tr>
                 {{/each}}
                 </tbody>
@@ -56,7 +64,7 @@
                 <div class="form-group mt-4">
                     <select class="form-control" id="servicioDropdown" name="servicioId" onchange="checkServicioSeleccionado()">
                         <option value="">Seleccione un Servicio</option>
-                        {{#each listaServicios}}
+                        {{#each listaServiciosNoAfectan}}
                         <option value="{{this.id}}">{{this.nombre}}</option>
                         {{/each}}
                     </select>

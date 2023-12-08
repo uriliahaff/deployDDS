@@ -103,9 +103,14 @@ public class Miembro {
     public void addLugarDeInteres(Direccion direccion)
     {
         lugaresDeInteres.add(direccion);
-    }    public void addServicioDeInteres(Servicio servicio)
+    }
+    public void addServicioDeInteres(Servicio servicio)
     {
         serviciosQueAfectan.add(servicio);
+    }
+    public void removeServicioDeInteres(Servicio servicio)
+    {
+        serviciosQueAfectan.remove(servicio);
     }
 //TODO: Servicio de interes, entidad de interes,
 

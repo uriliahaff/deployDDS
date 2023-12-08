@@ -42,13 +42,15 @@
     {{#if editarComunidad}}
     <form action="/comunidad/addInteres" method="POST">
         <input type="hidden" name="comunidadId" value="{{comunidad.id}}" />
-        <select name="servicioSeleccionado" id="servicioDropdown">
+   <div class="form-group mt-4">
+        <select class="form-control sm" name="servicioSeleccionado" id="servicioDropdown">
             <!-- Opciones del dropdown llenadas dinámicamente -->
             {{#each listaDeServicios}}
             <option value="{{this.id}}">{{this.nombre}}</option>
             {{/each}}
         </select>
-        <button type="submit">agregar</button>
+       </div>
+   <button type="submit" class="btn btn-primary mt-2"> <i class="fas fa-plus fa-sm fa-fw mr-2 "></i>Agregar</button>
     </form>
     {{/if}}
 </div>
@@ -119,7 +121,7 @@
                     {{#if this.MiembroNoEsAdmin}}
                         <td>
                             <form action="/comunidad/{{comunidad.id}}/ascender/{{this.id}}" method="post">
-                                <button type="submit" class="btn btn-success"><i class="fas fa-arrow-up fa-sm fa-fw mr-2 ">Ascender a Admin</button>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-arrow-up fa-sm fa-fw mr-2 "></i>Ascender a Admin</button>
                             </form>
                         </td>
                     {{/if}}
