@@ -1,9 +1,11 @@
-
 {{#partial "contenido" }}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 <h1 class="h3 mb-2 text-gray-800">{{entidad.nombre}}</h1>
-<p class="mb-4">Tipo: {{entidad.tipo.nombre}}</p>
-<p class="mb-4">Correo Electrónico: {{entidad.email}}</p>
-<p class="mb-4">Descripción: {{entidad.descripcion}}</p>
+<p class="mb-4">Tipo: <strong>{{entidad.tipo.tipo}} </strong></p>
+<p class="mb-4">Correo Electrónico: <strong>{{entidad.email}}</strong></p>
+<p class="mb-4">Descripción: <strong>{{entidad.descripcion}}</strong></p>
 
         <!-- Lista de Establecimientos Asociados -->
 <div class="card shadow mb-4">
@@ -53,14 +55,10 @@
                 <textarea class="form-control" id="eDescripcion" name="eDescripcion"></textarea>
             </div>
 
-            <div class="form-group">
-                <div class="card-body">
-
-
                             <!-- Dropdown para Provincia -->
                             <div class="form-group">
                                 <label for="provincia">Provincia:</label>
-                                <select class="form-control" id="provincia" name="provinciaId" required onchange="habilitarMunicipio()">
+                                <select class="form-control" id="provincia" name="provincia" required onchange="habilitarMunicipio()">
                                     <option value="">Seleccione una Provincia</option>
                                     {{#each provincias}}
                                     <option value="{{this.id}}">{{this.nombre}}</option>
@@ -71,7 +69,7 @@
                                     <!-- Dropdown para Municipio, inicialmente deshabilitado -->
                             <div class="form-group">
                             <label for="municipio">Municipio:</label>
-                            <select class="form-control" id="municipio" name="municipioId" disabled onchange="habilitarLocalidad()">
+                            <select class="form-control" id="municipio" name="municipio" disabled onchange="habilitarLocalidad()">
                                 <option value="">Primero seleccione una Provincia</option>
                                 {{#each municipios}}
                                 <option value="{{this.id}}">{{this.nombre}}</option>
@@ -82,7 +80,7 @@
                                     <!-- Dropdown para Localidad, inicialmente deshabilitado -->
                             <div class="form-group">
                             <label for="localidad">Localidad:</label>
-                            <select class="form-control" id="localidad" name="localidadId" disabled>
+                            <select class="form-control" id="localidad" name="localidad" disabled>
                                 <option value="">Primero seleccione un Municipio</option>
                                 {{#each localidades}}
                                 <option value="{{this.id}}">{{this.nombre}}</option>
@@ -119,13 +117,10 @@
                         </script>
 
 
-
-
-                </div>
             </div>
             <!-- Aquí puedes agregar más campos según sea necesario -->
 
-            <button type="submit" class="btn btn-primary">Crear Establecimiento</button>
+            <button type="submit" class="btn btn-primary m-4">Crear Establecimiento</button>
         </form>
     </div>
 </div>

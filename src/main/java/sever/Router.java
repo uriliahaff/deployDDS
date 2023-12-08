@@ -138,6 +138,7 @@ public class Router {
 
 
             Server.app().get("/entidad/{id}", ((EntidadController) FactoryController.controller("entidad"))::indexEntidad);
+            Server.app().post("/entidad/{id}/crearEstablecimiento/{idEntidadPrestadora}", ((EntidadController) FactoryController.controller("entidad"))::crearEstablecimientoEntidadPrestadora);
             Server.app().post("/entidad/{id}/crearEstablecimiento", ((EntidadController) FactoryController.controller("entidad"))::crearEstablecimiento);
             Server.app().post("/entidades/crearEntidad", ((EntidadController) FactoryController.controller("entidad"))::crearEntidad);
 

@@ -66,8 +66,19 @@ public class EntidadController
         entidad.getEstablecimientos().size();
         model.put("entidad", entidad);
 
-        EntidadPrestadora entidadPrestadora = repositorioUsuario.findEntidadPrestadoraByUserId(user.getId());
-        model.put("editarEntidades", user.tienePermiso("editarEntidades") || (entidadPrestadora != null && entidadPrestadora.getEntidad().getId() == entidadId));
+        List<EntidadPrestadora> entidadesPrestadora = repositorioUsuario.findEntidadesPrestadoraslByUserId(user.getId());
+
+        boolean contieneEntidad = false;
+        if (entidadesPrestadora != null) {
+            for (EntidadPrestadora entidadPrestadora : entidadesPrestadora) {
+                if (entidadPrestadora.getEntidad() == entidad) {
+                    contieneEntidad = true;
+                    break;
+                }
+            }
+        }
+
+        model.put("editarEntidades", (user.tienePermiso("editarEntidades") ||  contieneEntidad));
 
         model.put("tipos",repositorioEntidad.findAllTipoEntidad());
         model.put("provincias",repositorioDireccion.findAllProvincias());
@@ -84,7 +95,7 @@ public class EntidadController
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
         navBarVisualizer.colocarItems(user.getRoles(), model);
 
-        context.render("entidad_detalle.hbs", model);
+        context.render("entidadDetalle.hbs", model);
     }
 
     public void indexTipoEntidad(Context context){
@@ -122,18 +133,19 @@ public class EntidadController
         repositorioEntidad.save(entidad);
         context.redirect("/admin/entidades");
     }
-    public void crearEstablecimiento(Context context)
+    public void crearEstablecimientoEntidadPrestadora(Context context)
     {
         int entidadId = Integer.parseInt(context.pathParam("id"));
+        int entidadPrestadoraId = Integer.parseInt(context.pathParam("idEntidadPrestadora"));
         Entidad entidad = repositorioEntidad.findEntidadById(entidadId);
         String establecimientoNombre = context.formParam("eNombre");
         String establecimientoDescripcion = context.formParam("eDescripcion");
 
         System.out.println(establecimientoNombre);
 
-        String provinciaIdRaw = context.formParam("provinciaId");
-        String localidadIdRaw = context.formParam("localidadId");
-        String municipioIdRaw = context.formParam("municipioId");
+        String provinciaIdRaw = context.formParam("provincia"+entidadPrestadoraId);
+        String localidadIdRaw = context.formParam("localidad"+entidadPrestadoraId);
+        String municipioIdRaw = context.formParam("municipio"+entidadPrestadoraId);
 
         Provincia provincia = repositorioDireccion.findProvincia(Integer.parseInt(provinciaIdRaw));
         Direccion direccion;
@@ -162,6 +174,48 @@ public class EntidadController
 
         repositorioEntidad.update(entidad);
         context.redirect("/perfil");
+    }
+
+    public void crearEstablecimiento(Context context)
+    {
+        int entidadId = Integer.parseInt(context.pathParam("id"));
+        Entidad entidad = repositorioEntidad.findEntidadById(entidadId);
+        String establecimientoNombre = context.formParam("eNombre");
+        String establecimientoDescripcion = context.formParam("eDescripcion");
+
+        System.out.println(establecimientoNombre);
+
+        String provinciaIdRaw = context.formParam("provincia");
+        String localidadIdRaw = context.formParam("localidad");
+        String municipioIdRaw = context.formParam("municipio");
+
+        Provincia provincia = repositorioDireccion.findProvincia(Integer.parseInt(provinciaIdRaw));
+        Direccion direccion;
+        if(municipioIdRaw.equals(""))
+        {
+            direccion = new Direccion(provincia);
+        }
+        else
+        {
+            Municipio municipio = repositorioDireccion.findMunicipio(Integer.parseInt(municipioIdRaw));
+            if(localidadIdRaw.equals(""))
+            {
+                direccion = new Direccion(provincia, municipio);
+            }
+            else
+            {
+                Localidad localidad = repositorioDireccion.findLocalidad(Integer.parseInt(localidadIdRaw));
+                direccion = new Direccion(provincia,municipio,localidad);
+            }
+        }
+        repositorioDireccion.saveDireccion(direccion);
+        Establecimiento establecimiento = new Establecimiento(establecimientoNombre,establecimientoDescripcion,direccion);
+        establecimiento.setEntidad(entidad);
+        repositorioEstablecimiento.save(establecimiento);
+        entidad.agregarEstablecimiento(establecimiento);
+
+        repositorioEntidad.update(entidad);
+        context.redirect("/entidad/"+entidadId);
     }
 
 }
