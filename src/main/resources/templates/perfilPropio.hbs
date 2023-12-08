@@ -97,9 +97,9 @@
                            <td>{{this.municipio.nombre}}</td>
                            <td>{{this.localidad.nombre}}</td>
                            <td>
-                                            <form id="formBorrarDireccion" action="/perfil/{{userID}}/removeLugarInteres/{{this.id}}" method="POST">
-                                                    <button type="submit"  class="btn btn-danger">Borrar</button>
-                                            </form>
+                            <form id="formBorrarDireccion" action="/perfil/{{userID}}/removeLugarInteres/{{this.id}}" method="POST">
+                                <button type="submit"  class="btn btn-danger">Borrar</button>
+                            </form>
                            </td>
                        </tr>
                        {{/each}}
@@ -324,35 +324,6 @@
                                {{/each}}
                            </select>
                            </div>
-
-                       <script>
-                           function habilitarMunicipio(id) {
-                               var provinciaSeleccionada = document.getElementById("provincia"+id).value;
-                               var municipioSelect = document.getElementById("municipio"+id);
-                              // var botonSubmit = document.getElementById("botonSubmit{{this.nombre}}");
-
-                               if (provinciaSeleccionada) {
-                                   municipioSelect.disabled = false;
-                                  // botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
-                               } else {
-                                   municipioSelect.disabled = true;
-                                   document.getElementById("localidad"+id).disabled = true; // También deshabilita localidad
-                                 //  botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
-                               }
-                           }
-
-                           function habilitarLocalidad(id) {
-                               var municipioSeleccionado = document.getElementById("municipio"+id).value;
-                               var localidadSelect = document.getElementById("localidad"+id);
-
-                               if (municipioSeleccionado) {
-                                   localidadSelect.disabled = false;
-                               } else {
-                                   localidadSelect.disabled = true;
-                               }
-                           }
-                       </script>
-
 
 
             <!-- Aquí puedes agregar más campos según sea necesario -->

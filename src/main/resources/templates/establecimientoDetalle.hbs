@@ -19,7 +19,7 @@ background-color: green!important;
         <h3>{{establecimiento.nombre}}</h3>
         <p>Descripcion: <strong>{{establecimiento.descripcion}}</strong></p>
         <p>Entidad: <strong>{{establecimiento.entidad.nombre}}</strong></p>
-        <p>Dirección: <strong>{{establecimiento.direccion.direccionCompleta}}</strong></p>
+        <p>Dirección: <strong> {{establecimiento.direccion.localidad.nombre}}</strong><i> ({{establecimiento.direccion.municipio.nombre}}, {{establecimiento.direccion.provincia.nombre}})</i></p>
     </div>
 </div>
 

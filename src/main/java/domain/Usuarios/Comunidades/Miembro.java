@@ -116,7 +116,6 @@ public class Miembro {
     {
         serviciosQueAfectan.remove(servicio);
     }
-//TODO: Servicio de interes, entidad de interes,
 
     public boolean estaEnArea(String Loc)
     {
