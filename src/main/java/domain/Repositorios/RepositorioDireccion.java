@@ -1,5 +1,6 @@
 package domain.Repositorios;
 
+import domain.Usuarios.OrganismoDeControl;
 import domain.localizaciones.Direccion;
 import domain.other.EntityManagerProvider;
 import domain.services.georef.entities.Localidad;
@@ -7,6 +8,8 @@ import domain.services.georef.entities.Municipio;
 import domain.services.georef.entities.Provincia;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class RepositorioDireccion
@@ -31,6 +34,11 @@ public class RepositorioDireccion
         entityManager.getTransaction().begin();
         entityManager.remove(direccion);
         entityManager.getTransaction().commit();
+    }
+
+    public Direccion findDireccion(int id)
+    {
+        return entityManager.find(Direccion.class, id);
     }
 
     public List<Direccion> findAllDirecciones() {

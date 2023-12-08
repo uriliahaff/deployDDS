@@ -131,6 +131,7 @@ public class Router {
             Server.app().get("/perfil/organismo/{id}", ((OrganismoDeControlController) FactoryController.controller("organismoDeControl"))::indexOrganismoDeControl);*/
 
             Server.app().post("/perfil/{id}/addLugarInteres", ((PerfilController) FactoryController.controller("perfil"))::addLugarDeInteres);
+            Server.app().post("/perfil/{id}/removeLugarInteres/{idDireccion}", ((PerfilController) FactoryController.controller("perfil"))::removeLugarDeInteres);
             Server.app().post("/perfil/{id}/addService", ((PerfilController) FactoryController.controller("perfil"))::addServicioDeInteres);
             Server.app().post("/perfil/{id}/borrarServicio/{idServicio}", ((PerfilController) FactoryController.controller("perfil"))::borrarServicio);
             Server.app().post("/perfil/{idMiembro}/agregarHorario", ((PerfilController) FactoryController.controller("perfil"))::agregarHorario);

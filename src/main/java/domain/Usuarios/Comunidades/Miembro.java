@@ -104,6 +104,10 @@ public class Miembro {
     {
         lugaresDeInteres.add(direccion);
     }
+    public void removeLugarDeInteres(Direccion direccion)
+    {
+        lugaresDeInteres.remove(direccion);
+    }
     public void addServicioDeInteres(Servicio servicio)
     {
         serviciosQueAfectan.add(servicio);

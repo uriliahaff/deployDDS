@@ -179,6 +179,20 @@ public class PerfilController
         context.redirect("/perfil");
     }
 
+    public void removeLugarDeInteres(Context context)
+    {
+        int userId = Integer.parseInt(context.cookie("id"));
+        int direccionId = Integer.parseInt(context.pathParam("idDireccion"));
+        Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
+
+        Direccion direccion = repositorioDireccion.findDireccion(direccionId);
+
+        miembro.removeLugarDeInteres(direccion);
+        repositorioUsuario.updateMiembro(miembro);
+
+        context.redirect("/perfil");
+    }
+
     public void addServicioDeInteres(Context context)
     {
         int miembroId = Integer.parseInt(context.pathParam("id")); // Asume que el ID del miembro está en la ruta

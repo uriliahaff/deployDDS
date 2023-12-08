@@ -87,6 +87,7 @@
                            <th>Provincia</th>
                            <th>Municipio</th>
                            <th>Localidad</th>
+                           <th></th>
                        </tr>
                        </thead>
                        <tbody>
@@ -95,6 +96,11 @@
                            <td>{{this.provincia.nombre}}</td>
                            <td>{{this.municipio.nombre}}</td>
                            <td>{{this.localidad.nombre}}</td>
+                           <td>
+                                            <form id="formBorrarDireccion" action="/perfil/{{userID}}/removeLugarInteres/{{this.id}}" method="POST">
+                                                    <button type="submit"  class="btn btn-danger">Borrar</button>
+                                            </form>
+                           </td>
                        </tr>
                        {{/each}}
                        </tbody>
