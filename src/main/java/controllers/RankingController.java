@@ -28,6 +28,12 @@ public class RankingController {
     private List<RankLeaderBoardUnit> getAndSortRanking(LeaderBoardType type) {
         List<RankLeaderBoardUnit> rankList = getLastRanking(type);
         rankList.sort(Comparator.comparing(RankLeaderBoardUnit::getValue).reversed());
+
+        for (int i = 0; i < rankList.size(); i++) {
+            RankLeaderBoardUnit rankUnit = rankList.get(i);
+            rankUnit.setPosicion(i+1);
+        }
+
         return rankList;
     }
 
@@ -63,13 +69,16 @@ public class RankingController {
         int rankings = Integer.parseInt(context.pathParam("id"));
 
         switch (rankings) {
-            case 1: model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_PROMEDIO_TIEMPO));
-            model.put("descripcion", "Entidades con mayor promedio de tiempo de cierre de incidentes (diferencia entre horario de cierre de incidente y horario de apertura) en la semana");
+            case 1:
+                model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_PROMEDIO_TIEMPO));
+                model.put("descripcion", "Entidades con mayor promedio de tiempo de cierre de incidentes (diferencia entre horario de cierre de incidente y horario de apertura) en la semana");
                 break;
-            case 2:model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_GRADO_IMPACTO));
+            case 2:
+                model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_GRADO_IMPACTO));
                 model.put("descripcion", "Entidades con mayor cantidad de incidentes reportados en la semana.");
                 break;
-            case 3:model.put("ranking", getAndSortRanking(LeaderBoardType.MAYORCANTIDADINCIDENTESREPORTADOS));
+            case 3:
+                model.put("ranking", getAndSortRanking(LeaderBoardType.MAYORCANTIDADINCIDENTESREPORTADOS));
                 model.put("descripcion", "Mayor grado de impacto de las problemáticasa.");
 
                 break;

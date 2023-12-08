@@ -1,19 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- Meta tags, títulos y links a CSS aquí -->
-    <title>Detalle del Establecimiento</title>
-</head>
-<body>
+{{#partial "contenido" }}
+<style>
+
+.OUT_OF_SERVICE{
+background-color: red!important;
+}
+.IN_SERVICE{
+background-color: green!important;
+}
+
+</style>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 <h1 class="h3 mb-2 text-gray-800">Detalle del Establecimiento</h1>
 <p class="mb-4">Información sobre el establecimiento seleccionado.</p>
 
 <div class="card shadow mb-4">
     <div class="card-body">
         <h3>{{establecimiento.nombre}}</h3>
-        <p>{{establecimiento.descripcion}}</p>
-        <p>Entidad: {{establecimiento.entidad.nombre}}</p>
-        <p>Dirección: {{establecimiento.direccion.direccionCompleta}}</p> <!-- Asegúrate de tener una representación adecuada de la dirección -->
+        <p>Descripcion: <strong>{{establecimiento.descripcion}}</strong></p>
+        <p>Entidad: <strong>{{establecimiento.entidad.nombre}}</strong></p>
+        <p>Dirección: <strong>{{establecimiento.direccion.direccionCompleta}}</strong></p>
     </div>
 </div>
 
@@ -26,7 +32,6 @@
             <table class="table table-bordered" id="dataTableServicios" width="100%" cellspacing="0">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Servicio</th>
                     <th>Estado</th>
                 </tr>
@@ -34,9 +39,8 @@
                 <tbody>
                 {{#each establecimiento.servicios}}
                 <tr>
-                    <td>{{this.id}}</td>
                     <td>{{this.servicio.nombre}}</td>
-                    <td>{{this.estado}}</td>
+                    <td class=""><span class="badge badge-primary {{this.estado}}">{{this.estado}}</span></td>
                 </tr>
                 {{/each}}
                 </tbody>
@@ -71,10 +75,12 @@
                     <!-- Agrega más estados según sea necesario -->
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Agregar Prestación</button>
+            <button type="submit" class="btn btn-primary mt-3">Agregar Prestación</button>
         </form>
     </div>
 </div>
 {{/if}}
-</body>
-</html>
+{{/partial}}
+{{> base }}
+
+

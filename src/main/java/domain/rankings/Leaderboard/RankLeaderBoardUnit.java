@@ -2,6 +2,8 @@ package domain.rankings.Leaderboard;
 
 import domain.Repositorios.RepositorioEntidad;
 import domain.entidades.Entidad;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,6 +29,10 @@ public class RankLeaderBoardUnit {
     @Column(name = "value")
     private double value;
 
+    @Transient
+    @Setter
+    @Getter
+    private int posicion;
 
     @Column(name = "date_time")
     private LocalDate dateTime;

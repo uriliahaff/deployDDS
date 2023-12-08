@@ -8,6 +8,7 @@ import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.Usuario;
 import domain.entidades.Entidad;
 import domain.entidades.Establecimiento;
+import domain.services.NavBarVisualizer;
 import domain.servicios.Estado;
 import domain.servicios.PrestacionDeServicio;
 import domain.servicios.Servicio;
@@ -37,9 +38,18 @@ public class EstablecimientoController
         int establecimientoId = Integer.parseInt(context.pathParam("id"));
         Establecimiento establecimiento = repositorioEstablecimiento.find(establecimientoId);
 
-        EntidadPrestadora entidadPrestadora = repositorioUsuario.findEntidadPrestadoraByUserId(user.getId());
-        model.put("editarEntidades", user.tienePermiso("editarEntidades") || (entidadPrestadora != null && entidadPrestadora.getEntidad().getId() == establecimiento.getEntidad().getId()));
+        List<EntidadPrestadora> entidadesPrestadora = repositorioUsuario.findEntidadesPrestadoraslByUserId(user.getId());
+        boolean contieneEntidad = false;
+        if (entidadesPrestadora != null) {
+            for (EntidadPrestadora entidadPrestadora : entidadesPrestadora) {
+                if (entidadPrestadora.getEntidad() == establecimiento.getEntidad()) {
+                    contieneEntidad = true;
+                    break;
+                }
+            }
+        }
 
+        model.put("editarEntidades", (user.tienePermiso("editarEntidades") ||  contieneEntidad));
 
         //CommonController.fillNav(model, user);
 
@@ -51,23 +61,10 @@ public class EstablecimientoController
 
         model.put("servicios", repositorioServicio.findAll());
 
-        try {
-            // Configura el loader para buscar plantillas en el directorio /templates
-            Handlebars handlebars = new Handlebars().with(new ClassPathTemplateLoader("/templates", ".hbs"));
+        NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+        navBarVisualizer.colocarItems(user.getRoles(), model);
 
-            // Compila el contenido del partial 'incidentes_template' y pásalo como 'body'
-            Template template = handlebars.compile("establecimiento_detalle");
-            String bodyContent = template.apply(model);
-            model.put("body", bodyContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Es importante manejar esta excepción adecuadamente
-            context.status(500).result("Error al procesar la plantilla de incidentes.");
-            return; // Sal del método aquí si no quieres procesar más el request debido al error
-        }
-
-        // Renderiza la plantilla común con el contenido incluido
-        context.render("layout_comun.hbs", model);
+        context.render("establecimientoDetalle.hbs", model);
     }
 
     public void addPrestacion(Context context)
