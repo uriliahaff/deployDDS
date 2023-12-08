@@ -18,6 +18,8 @@ public class Localidad {
     public Localidad() {
     }
 
+    private Municipio municipio;
+
     public String getNombre() {
         return nombre;
     }

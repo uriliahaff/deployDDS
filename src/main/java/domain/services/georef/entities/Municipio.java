@@ -15,6 +15,8 @@ public class Municipio {
     @Column(nullable = false)
     private String nombre;
 
+    private
+
     public Municipio(String nombre, long id) {
         this.nombre = nombre;
         this.id = id;
