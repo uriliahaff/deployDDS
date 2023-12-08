@@ -122,6 +122,7 @@ public class ComunidadController {
         model.put("usuarioPerteneceAComunidad", comunidad.esMiembroByUserId(userId));
         model.put("usuarioEsTipoMiembro", esTipoMiembro);
         model.put("puedeUnirse", !comunidad.esMiembroByUserId(userId) && esTipoMiembro);
+
         model.put("comunidad", comunidad);
 
         List<Map<String, Object>> listaDeMiembros = new ArrayList<>();

@@ -61,6 +61,7 @@ public class EntidadController
 
         CommonController.fillNav(model, user);
         int entidadId = Integer.parseInt(context.pathParam("id"));
+
         Entidad entidad = repositorioEntidad.findEntidadById(entidadId);
         entidad.getEstablecimientos().size();
         model.put("entidad", entidad);
@@ -160,7 +161,7 @@ public class EntidadController
         entidad.agregarEstablecimiento(establecimiento);
 
         repositorioEntidad.update(entidad);
-        context.redirect("/entidad/"+ entidadId);
+        context.redirect("/perfil");
     }
 
 }

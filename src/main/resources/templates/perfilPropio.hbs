@@ -1,0 +1,356 @@
+{{#partial "extra" }}
+
+{{#if esMiembro}}
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary">Miembro</h4>
+</div>
+        <div class="card-body">
+    <p class="">Correo Electrónico: <strong>{{emailMiembro}}</strong></p>
+    <p class="">Teléfono: <strong>{{telefonoMiembro}}</strong></p>
+    </div>
+
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Medio de notificacion</h6>
+    </div>
+        <div class="card-body">
+
+    Actual: <strong> {{showMedioPreferido}} </strong>
+    <form action="/perfil/{{userID}}/updateNotificationPreferences" method="POST">
+        <div>
+            <input type="radio" id="preferenciaEmail" name="preferencia" value="email">
+            <label for="preferenciaEmail">Correo Electrónico</label>
+            <input type="radio" id="preferenciaTelefono" name="preferencia" value="telefono">
+            <label for="preferenciaTelefono">Whatsapp</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Preferencias</button>
+    </form>
+</div>
+</div>
+
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Servicios Afectados</h6>
+    </div>
+
+    <div class="card-body tabla">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableServicios" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Nombre del Servicio</th>
+                    <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each miembro.serviciosQueAfectan}}
+                <tr>
+                    <td>{{this.nombre}}</td>
+                    <td>{{this.descripcion}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <form id="formAgregarServicio" action="/perfil/{{userID}}/addService" method="POST">
+                <div class="form-group mt-4">
+                    <select class="form-control" id="servicioDropdown" name="servicioId" onchange="checkServicioSeleccionado()">
+                        <option value="">Seleccione un Servicio</option>
+                        {{#each listaServicios}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <button type="submit" id="agregarServicioBtn" class="btn btn-primary mt-3" disabled>Agregar Servicio</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Lugares de Interes</h6>
+    </div>
+    <div class="card-body tabla">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTableLugaresInteres" width="100%" cellspacing="0">
+                       <thead>
+                       <tr>
+                           <th>Provincia</th>
+                           <th>Municipio</th>
+                           <th>Localidad</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       {{#each miembro.lugaresDeInteres}}
+                       <tr>
+                           <td>{{this.provincia.nombre}}</td>
+                           <td>{{this.municipio.nombre}}</td>
+                           <td>{{this.localidad.nombre}}</td>
+                       </tr>
+                       {{/each}}
+                       </tbody>
+                   </table>
+        <form id="formDireccion" action="/perfil/{{userID}}/addLugarInteres" method="POST">
+            {{{crearDireccion}}}
+            <button type="submit" id="botonSubmit" class="btn btn-primary" disabled>Agregar direccion</button>
+
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Configuración de Notificación de Incidentes</h6>
+    </div>
+    <div class="card-body tabla">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center" id="dataTableHorarios" width="100%" cellspacing="0">
+                           <thead>
+                           <tr>
+                               <th>Horario</th>
+                               <th></th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           {{#each configuracionNotificacionDeIncidentes.horarioPreferencia}}
+                           <tr>
+                               <td class="horario-en-minutos">{{this}}</td> <!-- Agregar una clase para identificar los campos de horario -->
+                               <td>
+                                   <!-- Botón para borrar un horario -->
+                                   <form action="/perfil/{{profileId}}/borrarHorario" method="POST">
+                                       <input type="hidden" name="horario" value="{{this}}">
+                                       <button type="submit" class="btn btn-danger">Borrar</button>
+                                   </form>
+                               </td>
+                           </tr>
+                           {{/each}}
+
+                           </tbody>
+                       </table>
+        <form action="/perfil/{{userID}}/agregarHorario" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="time" class="form-control" name="nuevaHora">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Comunidades</h6>
+    </div>
+    <div class="card-body tabla">
+        <div class="table-responsive">
+             <table class="table table-bordered" id="dataTableComunidades" width="100%" cellspacing="0">
+                       <thead>
+                       <tr>
+                           <th>Nombre de la Comunidad</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       {{#each miembro.comunidades}}
+                       <tr>
+                           <td><a href="/comunidad/{{this.id}}">{{this.nombre}}</a></td>
+                       </tr>
+
+                       {{/each}}
+                       </tbody>
+                   </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+{{/if}}
+
+{{#if esOrganismoControl}}
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary">Organismos de Control</h4>
+</div>
+
+{{#each organismosDeControl}}
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">{{this.nombre}}</h6>
+    </div>
+            <div class="card-body">
+        <p class="">Descripcion: <strong>{{this.descripcion}}</strong></p>
+        <p class="">Correo electronico responsable: <strong>{{this.correoElectronicoResponsable}}</strong></p>
+        <p class="">Servicio: <strong>{{this.servicio.nombre}}</strong></p>
+        <p class="">Descripcion del servicio: <strong>{{this.servicio.descripcion}}</strong></p>
+        </div>
+</div>
+
+ {{/each}}
+
+</div>
+{{/if}}
+
+{{#if esEntidadPrestadora}}
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h4 class="m-0 font-weight-bold text-primary">Entidades Prestadoras</h4>
+</div>
+
+{{#each entidadesPrestadoras}}
+<div class="card pt-0" style="  border-top: 1px solid rgba(0, 0, 0, 0.5);    border-radius: 0px;">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">{{this.nombre}}</h6>
+    </div>
+            <div class="card-body">
+       <p class="">Descripcion: <strong>{{this.descripcion}}</strong></p>
+       <p class="">Correo Electrónico: <strong>{{this.correoElectronicoResponsable}}</strong></p>
+       <p class="">Entidad:  <strong>{{this.entidad.nombre}}</strong></p>
+       <p class="">Descripcion de entidad:  <strong>{{this.entidad.descripcion}}</strong></p>
+           <div class="table-responsive tabla">
+               <table class="table table-bordered" id="dataTableEstablecimientos" width="100%" cellspacing="0">
+                   <thead>
+                   <tr>
+                       <th>Nombre del Establecimiento</th>
+                       <th>Dirección</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {{#each this.entidad.establecimientos}}
+                   <tr>
+                       <td><a href="/establecimiento/{{this.id}}">{{this.nombre}}</a></td>
+                       <td>{{this.direccion.direccionCompleta}}</td>
+                   </tr>
+                   {{/each}}
+                   </tbody>
+               </table>
+           </div>
+    <div class="card-body">
+        <form action="/entidad/{{this.entidad.id}}/crearEstablecimiento" method="POST">
+            <div class="form-group">
+                <label for="establecimientoNombre">Nombre del Establecimiento:</label>
+                <input type="text" class="form-control" id="eNombre" name="eNombre" required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="establecimientoDescripcion">Descripción:</label>
+                <textarea class="form-control" id="eDescripcion" name="eDescripcion"></textarea>
+            </div>
+
+                           <!-- Dropdown para Provincia -->
+                           <div class="form-group">
+                               <label for="provincia">Provincia:</label>
+                               <select class="form-control" id="provincia{{this.nombre}}" name="provincia{{this.nombre}}" required onchange="habilitarMunicipio()">
+                                   <option value="">Seleccione una Provincia</option>
+                                   {{#each provincias}}
+                                   <option value="{{this.id}}">{{this.nombre}}</option>
+                                   {{/each}}
+                               </select>
+                           </div>
+
+                                   <!-- Dropdown para Municipio, inicialmente deshabilitado -->
+                           <div class="form-group">
+                           <label for="municipio">Municipio:</label>
+                           <select class="form-control" id="municipio{{this.nombre}}" name="municipio{{this.nombre}}" disabled onchange="habilitarLocalidad()">
+                               <option value="">Primero seleccione una Provincia</option>
+                               {{#each municipios}}
+                               <option value="{{this.id}}">{{this.nombre}}</option>
+                               {{/each}}
+                           </select>
+                           </div>
+
+                                   <!-- Dropdown para Localidad, inicialmente deshabilitado -->
+                           <div class="form-group">
+                           <label for="localidad">Localidad:</label>
+                           <select class="form-control" id="localidad{{this.nombre}}" name="localidad{{this.nombre}}" disabled>
+                               <option value="">Primero seleccione un Municipio</option>
+                               {{#each localidades}}
+                               <option value="{{this.id}}">{{this.nombre}}</option>
+                               {{/each}}
+                           </select>
+                           </div>
+
+                       <script>
+                           function habilitarMunicipio() {
+                               var provinciaSeleccionada = document.getElementById("provincia{{this.nombre}}").value;
+                               var municipioSelect = document.getElementById("municipio{{this.nombre}}");
+                               var botonSubmit = document.getElementById("botonSubmit{{this.nombre}}");
+
+                               if (provinciaSeleccionada) {
+                                   municipioSelect.disabled = false;
+                                   botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
+                               } else {
+                                   municipioSelect.disabled = true;
+                                   document.getElementById("localidad").disabled = true; // También deshabilita localidad
+                                   botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
+                               }
+                           }
+
+                           function habilitarLocalidad() {
+                               var municipioSeleccionado = document.getElementById("municipio").value;
+                               var localidadSelect = document.getElementById("localidad");
+
+                               if (municipioSeleccionado) {
+                                   localidadSelect.disabled = false;
+                               } else {
+                                   localidadSelect.disabled = true;
+                               }
+                           }
+                       </script>
+
+            <!-- Aquí puedes agregar más campos según sea necesario -->
+
+            <button type="submit" class="btn btn-primary mt-3">Crear Establecimiento</button>
+        </form>
+    </div>
+
+        </div>
+</div>
+
+ {{/each}}
+
+</div>
+{{/if}}
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var preferenciaActual = "{{preferencia}}"; // Asegúrate de que esto reciba la preferencia actual correctamente
+
+    // Encuentra el botón de radio correspondiente y márcalo como seleccionado
+    var botonPreferido = document.querySelector(`input[type="radio"][value="${preferenciaActual}"]`);
+    if (botonPreferido) {
+        botonPreferido.checked = true;
+    }
+});
+</script>
+<script>
+    function checkServicioSeleccionado() {
+        var servicioSeleccionado = document.getElementById("servicioDropdown").value;
+        var botonAgregar = document.getElementById("agregarServicioBtn");
+
+        botonAgregar.disabled = !servicioSeleccionado;
+    }
+    function formatoHora(minutos) {
+        const horas = Math.floor(minutos / 60);
+        const minutosRestantes = minutos % 60;
+        return `${horas.toString().padStart(2, '0')}:${minutosRestantes.toString().padStart(2, '0')}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const elementosHorario = document.querySelectorAll('.horario-en-minutos');
+        elementosHorario.forEach(elemento => {
+            const minutos = parseFloat(elemento.textContent);
+            elemento.textContent = formatoHora(minutos);
+        });
+    });
+</script>
+{{/partial}}
+{{> perfilBase }}

@@ -55,7 +55,72 @@
 
             <div class="form-group">
                 <div class="card-body">
-                        {{{crearDireccion}}}
+
+
+                            <!-- Dropdown para Provincia -->
+                            <div class="form-group">
+                                <label for="provincia">Provincia:</label>
+                                <select class="form-control" id="provincia" name="provinciaId" required onchange="habilitarMunicipio()">
+                                    <option value="">Seleccione una Provincia</option>
+                                    {{#each provincias}}
+                                    <option value="{{this.id}}">{{this.nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                                    <!-- Dropdown para Municipio, inicialmente deshabilitado -->
+                            <div class="form-group">
+                            <label for="municipio">Municipio:</label>
+                            <select class="form-control" id="municipio" name="municipioId" disabled onchange="habilitarLocalidad()">
+                                <option value="">Primero seleccione una Provincia</option>
+                                {{#each municipios}}
+                                <option value="{{this.id}}">{{this.nombre}}</option>
+                                {{/each}}
+                            </select>
+                            </div>
+
+                                    <!-- Dropdown para Localidad, inicialmente deshabilitado -->
+                            <div class="form-group">
+                            <label for="localidad">Localidad:</label>
+                            <select class="form-control" id="localidad" name="localidadId" disabled>
+                                <option value="">Primero seleccione un Municipio</option>
+                                {{#each localidades}}
+                                <option value="{{this.id}}">{{this.nombre}}</option>
+                                {{/each}}
+                            </select>
+                            </div>
+
+                        <script>
+                            function habilitarMunicipio() {
+                                var provinciaSeleccionada = document.getElementById("provincia").value;
+                                var municipioSelect = document.getElementById("municipio");
+                                var botonSubmit = document.getElementById("botonSubmit");
+
+                                if (provinciaSeleccionada) {
+                                    municipioSelect.disabled = false;
+                                    botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
+                                } else {
+                                    municipioSelect.disabled = true;
+                                    document.getElementById("localidad").disabled = true; // También deshabilita localidad
+                                    botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
+                                }
+                            }
+
+                            function habilitarLocalidad() {
+                                var municipioSeleccionado = document.getElementById("municipio").value;
+                                var localidadSelect = document.getElementById("localidad");
+
+                                if (municipioSeleccionado) {
+                                    localidadSelect.disabled = false;
+                                } else {
+                                    localidadSelect.disabled = true;
+                                }
+                            }
+                        </script>
+
+
+
+
                 </div>
             </div>
             <!-- Aquí puedes agregar más campos según sea necesario -->

@@ -138,18 +138,20 @@
                 {{#if this.MiembroNoEsAdmin}}
                                 <th></th>
                                  {{/if}}
-                                {{/if}}
+                 {{/if}}
             </tr>
             </thead>
         </table>
+        {{#if usuarioEsTipoMiembro}}
             {{#if puedeUnirse}}
                 <form action="/comunidad/join/{{comunidad.id}}" method="post">
-                    <button type="submit" class="btn btn-success">Unirse</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-user-plus fa-sm fa-fw mr-2 "></i>Unirse</button>
                 </form>
                 {{else}}
                 <form action="/comunidad/disjoin/{{comunidad.id}}" method="post">
-                     <button type="submit" class="btn btn-danger">Abandonar</button>
+                     <button type="submit" class="btn btn-danger"> <i class="fas fa-user-minus fa-sm fa-fw mr-2 "></i>Abandonar</button>
                 </form>
+            {{/if}}
             {{/if}}
     </div>
 </div>

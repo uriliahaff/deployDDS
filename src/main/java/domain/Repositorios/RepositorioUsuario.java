@@ -50,6 +50,30 @@ public class RepositorioUsuario {
         }
     }
 
+    public List<OrganismoDeControl> findOrganismosDeControlByUserId(int userId) {
+        try {
+            TypedQuery<OrganismoDeControl> query = entityManager.createQuery(
+                    "SELECT o FROM OrganismoDeControl o WHERE o.usuario.id = :userId", OrganismoDeControl.class);
+            query.setParameter("userId", userId);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null; // Retorna null si no se encuentra ningún resultado
+        }
+    }
+
+    public List<EntidadPrestadora> findEntidadesPrestadoraslByUserId(int userId) {
+        try {
+            TypedQuery<EntidadPrestadora> query = entityManager.createQuery(
+                    "SELECT e FROM EntidadPrestadora e WHERE e.usuario.id = :userId", EntidadPrestadora.class);
+            query.setParameter("userId", userId);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null; // O manejar de otra manera si no hay resultados
+        } catch (NonUniqueResultException e) {
+            throw new IllegalStateException("Más de una EntidadPrestadora encontrada para userId: " + userId);
+        }
+    }
+
     public EntidadPrestadora findEntidadPrestadoraByUserId(int userId) {
         try {
             TypedQuery<EntidadPrestadora> query = entityManager.createQuery(

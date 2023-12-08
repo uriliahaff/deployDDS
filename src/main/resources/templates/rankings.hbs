@@ -32,7 +32,7 @@
                                                             {{#each rankingPromedioTiempo}}
                                                                 <tr>
                                                                     <td>{{this.id}} / {{this.leaderboard.id}}</td>
-                                                                    <td>{{this.entidad.id}} {{this.entidad.nombre}}</td>
+                                                                    <td>{{this.entidad.nombre}}</td>
                                                                     <td>{{this.value}}</td>
                                                                 </tr>
                                                             {{/each}}
@@ -47,13 +47,13 @@
 
 
                                     <div class="col-xl-4 col-md-4 mb-4">
-                                        <a href="ranking.html" class="linkRanking">
+                                        <a href="/ranking/2" class="linkRanking">
                                         <div class="card  shadow h-100 py-2">
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="text font-weight-bold text-primary text-uppercase mb-2">
-                                                            Entidades con mayor cantidad de incidentes reportados en la semana.</div>
+                                                            Entidades con mayor cantidad de incidentes reportados.</div>
                                                     </div>
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                         <thead>
@@ -67,7 +67,7 @@
                                                         {{#each rankingMayorIncidentesReportados}}
                                                         <tr>
                                                             <td>{{this.id}} / {{this.leaderboard.id}}</td>
-                                                            <td>{{this.entidad.id}} {{this.entidad.nombre}}</td>
+                                                            <td>{{this.entidad.nombre}}</td>
                                                             <td>{{this.value}}</td>
                                                         </tr>
                                                         {{/each}}
@@ -82,7 +82,7 @@
                          
 
                                     <div class="col-xl-4 col-md-4 mb-4">
-                                        <a href="ranking.html" class="linkRanking">
+                                        <a href="/ranking/3" class="linkRanking">
                                         <div class="card  shadow h-100 py-2">
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
@@ -102,7 +102,7 @@
                                                         {{#each rankingMayorImpacto}}
                                                         <tr>
                                                             <td>{{this.id}} / {{this.leaderboard.id}}</td>
-                                                            <td>{{this.entidad.id}} {{this.entidad.nombre}}</td>
+                                                            <td>{{this.entidad.nombre}}</td>
                                                             <td>{{this.value}}</td>
                                                         </tr>
                                                         {{/each}}

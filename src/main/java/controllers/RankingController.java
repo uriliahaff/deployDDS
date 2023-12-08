@@ -60,6 +60,21 @@ public class RankingController {
     public void ranking(Context context){
         Map<String, Object> model = new HashMap<>();
 
+        int rankings = Integer.parseInt(context.pathParam("id"));
+
+        switch (rankings) {
+            case 1: model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_PROMEDIO_TIEMPO));
+            model.put("descripcion", "Entidades con mayor promedio de tiempo de cierre de incidentes (diferencia entre horario de cierre de incidente y horario de apertura) en la semana");
+                break;
+            case 2:model.put("ranking", getAndSortRanking(LeaderBoardType.MAYOR_GRADO_IMPACTO));
+                model.put("descripcion", "Entidades con mayor cantidad de incidentes reportados en la semana.");
+                break;
+            case 3:model.put("ranking", getAndSortRanking(LeaderBoardType.MAYORCANTIDADINCIDENTESREPORTADOS));
+                model.put("descripcion", "Mayor grado de impacto de las problemáticasa.");
+
+                break;
+        }
+
         model.put("username", context.cookie("username"));
         Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();

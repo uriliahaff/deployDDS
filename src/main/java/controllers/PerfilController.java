@@ -46,31 +46,66 @@ public class PerfilController
         OrganismoDeControl organismoDeControl = repositorioUsuario.findOrganismoDeControlByUserId(profileUserId);
         if(organismoDeControl!=null)
         {
-            context.redirect("/perfil/organismo/"+organismoDeControl.getId());
+            //context.redirect("/perfil/organismo/"+organismoDeControl.getId());
             return;
         }
         EntidadPrestadora entidadPrestadora = repositorioUsuario.findEntidadPrestadoraByUserId(profileUserId);
         if (entidadPrestadora!= null)
         {
-            context.redirect("/perfil/entidad/"+entidadPrestadora.getId());
+            //context.redirect("/perfil/entidad/"+entidadPrestadora.getId());
             return;
         }
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(profileUserId);
-        nuevoRenderPerfilMiembros(context,miembro, user);
+        //nuevoRenderPerfilMiembros(context,miembro, user);
 
 
     }
 
-    private void renderPerfilEP(Context context)
-    {
-        EntidadPrestadora entidadPrestadora;
+   public void perfilPropio(Context context){
+       Map<String, Object> model = new HashMap<>();
+       int profileUserId = Integer.parseInt(context.cookie("id"));
+       model.put("userID",profileUserId);
+       Usuario user = repositorioUsuario.findUsuarioById(profileUserId);
 
-    }
+       List<OrganismoDeControl> organismosDeControl = repositorioUsuario.findOrganismosDeControlByUserId(profileUserId);
 
-    private void renderPerfilODC(Context context)
-    {
+       if(!organismosDeControl.isEmpty())
+       {
+           model.put("esOrganismoControl",true);
+           model.put("organismosDeControl",organismosDeControl);
 
-    }
+       }
+
+       List<EntidadPrestadora> entidadPrestadoras = repositorioUsuario.findEntidadesPrestadoraslByUserId(profileUserId);
+
+       if(!entidadPrestadoras.isEmpty())
+       {
+           model.put("esEntidadPrestadora",true);
+           model.put("entidadesPrestadoras",entidadPrestadoras);
+           model.put("provincias",repositorioDireccion.findAllProvincias());
+           model.put("localidades",repositorioDireccion.findAllLocalidades());
+           model.put("municipios",repositorioDireccion.findAllMunicipios());
+       }
+
+
+       Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(profileUserId);
+       if(miembro!=null){
+           model.put("esMiembro",true);
+           model.put("emailMiembro",miembro.getCorreoElectronico());
+           model.put("telefonoMiembro",miembro.getTelefono());
+           model.put("showMedioPreferido",miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido().name());
+           model.put("miembro",miembro);
+           model.put("listaServicios",repositorioServicio.findAll());
+           model.put("configuracionNotificacionDeIncidentes", miembro.getConfiguracionNotificacionDeIncidentes());
+
+       }
+
+       model.put("username",user.getUsername());
+       NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
+       navBarVisualizer.colocarItems(user.getRoles(), model);
+
+       context.render("perfilPropio.hbs", model);
+   }
     private void nuevoRenderPerfilMiembros(Context context, Miembro miembro, Usuario user)
     {
         Map<String, Object> model = new HashMap<>();
@@ -95,7 +130,7 @@ public class PerfilController
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
         navBarVisualizer.colocarItems(user.getRoles(), model);
 
-        context.render("miembroPerfil.hbs", model);
+        context.render("perfilPropio.hbs", model);
     }
 
 
