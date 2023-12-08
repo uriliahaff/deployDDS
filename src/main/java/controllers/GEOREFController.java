@@ -55,17 +55,17 @@ public class GEOREFController {
 
             for(Municipio municipioNuevo: municipiosNuevos.municipios){
                 if(repoGEOREF.findMunicipio(municipioNuevo.getId()) != null)
-                    repoGEOREF.updateMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId()));
+                    repoGEOREF.updateMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId(), provinciaNueva));
                 else
-                    repoGEOREF.saveMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId()));
+                    repoGEOREF.saveMunicipio(new Municipio(municipioNuevo.getNombre(), municipioNuevo.getId(), provinciaNueva));
                 System.out.println("MUNICIPIO: "+municipioNuevo.getNombre());
 
                 ListadoDeLocalidades localidadesNuevas = servicio.listadoDeLocalidadesDeMunicipio(municipioNuevo.getId());
                 for(Localidad localidadNueva: localidadesNuevas.localidades){
                     if(repoGEOREF.findLocalidad(localidadNueva.getId()) != null)
-                        repoGEOREF.updateLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId()));
+                        repoGEOREF.updateLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId(), municipioNuevo));
                     else
-                        repoGEOREF.saveLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId()));
+                        repoGEOREF.saveLocalidad(new Localidad(localidadNueva.getNombre(), localidadNueva.getId(), municipioNuevo));
                     System.out.println("LOCALIDAD: "+localidadNueva.getNombre());
                 }
             }

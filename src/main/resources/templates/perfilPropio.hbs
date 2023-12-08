@@ -99,12 +99,48 @@
                        {{/each}}
                        </tbody>
                    </table>
+                    </div>
+                 </div>
+
+             <div class="card-body">
         <form id="formDireccion" action="/perfil/{{userID}}/addLugarInteres" method="POST">
-            {{{crearDireccion}}}
-            <button type="submit" id="botonSubmit" class="btn btn-primary" disabled>Agregar direccion</button>
+
+<div class="form-group">
+    <label for="provincia">Provincia:</label>
+    <select class="form-control" id="provincia" name="provincia" required onchange="habilitarMunicipioPropio()">
+        <option value="">Seleccione una Provincia</option>
+        {{#each provincias}}
+        <option value="{{this.id}}">{{this.nombre}}</option>
+        {{/each}}
+    </select>
+</div>
+
+<!-- Dropdown para Municipio, inicialmente deshabilitado -->
+<div class="form-group">
+    <label for="municipio">Municipio:</label>
+    <select class="form-control" id="municipio" name="municipio" disabled onchange="habilitarLocalidadPropio()">
+        <option value="">Primero seleccione una Provincia</option>
+        {{#each municipios}}
+        <option value="{{this.id}}" data-provincia-id="{{this.provincia.id}}">{{this.nombre}}</option>
+        {{/each}}
+    </select>
+</div>
+
+<!-- Dropdown para Localidad, inicialmente deshabilitado -->
+<div class="form-group">
+    <label for="localidad">Localidad:</label>
+    <select class="form-control" id="localidad" name="localidad" disabled>
+        <option value="">Primero seleccione un Municipio</option>
+        {{#each localidades}}
+        <option value="{{this.id}}" data-municipio-id="{{this.municipio.id}}">{{this.nombre}}</option>
+        {{/each}}
+    </select>
+</div>
+
+            <button type="submit" id="botonSubmitDireccion" class="btn btn-primary mt-3" >Agregar direccion</button>
 
         </form>
-        </div>
+
     </div>
 </div>
 
@@ -175,8 +211,6 @@
         </div>
     </div>
 </div>
-
-
 
 </div>
 {{/if}}
@@ -313,6 +347,8 @@
                            }
                        </script>
 
+
+
             <!-- Aquí puedes agregar más campos según sea necesario -->
 
             <button type="submit" class="btn btn-primary mt-3">Crear Establecimiento</button>
@@ -360,5 +396,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 </script>
+
+    <script src="/js/direccion.js"></script>
+
+
 {{/partial}}
 {{> perfilBase }}

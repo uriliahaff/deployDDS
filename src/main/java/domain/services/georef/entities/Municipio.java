@@ -1,5 +1,8 @@
 package domain.services.georef.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity //(name = "municipio")
@@ -15,11 +18,16 @@ public class Municipio {
     @Column(nullable = false)
     private String nombre;
 
-    private
+    @ManyToOne
+    @JoinColumn(name = "provincia_id")
+    @Getter
+    @Setter
+    private Provincia provincia;
 
-    public Municipio(String nombre, long id) {
+    public Municipio(String nombre, long id, Provincia provincia) {
         this.nombre = nombre;
         this.id = id;
+        this.provincia = provincia;
     }
 
 

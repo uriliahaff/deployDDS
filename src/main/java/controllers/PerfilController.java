@@ -149,9 +149,9 @@ public class PerfilController
     {
         int userId = Integer.parseInt(context.cookie("id"));
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
-        String provinciaIdRaw = context.formParam("provinciaId");
-        String localidadIdRaw = context.formParam("localidadId");
-        String municipioIdRaw = context.formParam("municipioId");
+        String provinciaIdRaw = context.formParam("provincia");
+        String localidadIdRaw = context.formParam("localidad");
+        String municipioIdRaw = context.formParam("municipio");
 
         Provincia provincia = repositorioDireccion.findProvincia(Integer.parseInt(provinciaIdRaw));
         Direccion direccion;
