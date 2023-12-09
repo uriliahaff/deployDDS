@@ -43,7 +43,11 @@ public class EntityManagerProvider {
                 "hibernate.connection.driver_class",
                 "hibernate.hbm2ddl.auto",
                 "hibernate.connection.pool_size",
-                "hibernate.show_sql" };
+                "hibernate.show_sql",
+                "hibernate.dialect",
+                "hibernate.archive.autodetection",
+                "use_sql_comments",
+                "hibernate.connection.serverTimezone"};
 
         for (String key : keys) {
             if (env.containsKey(key)) {
