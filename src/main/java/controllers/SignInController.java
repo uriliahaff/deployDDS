@@ -132,7 +132,7 @@ public class SignInController {
 
         Usuario usuario = generarUsuario(context, username, password);
         if (usuario == null) {
-            context.redirect("/registrar");
+            context.redirect("/signin");
             return;
         }
         String nombre = context.formParam("nombre");
@@ -143,7 +143,7 @@ public class SignInController {
         if ((correoElectronico == null || correoElectronico.isEmpty()) && (telefono == null || telefono.isEmpty())) {
             context.sessionAttribute("error",  "Por favor, ingresa un correo electrónico o un teléfono.");
 
-            context.redirect("/registrar");
+            context.redirect("/signin");
             return;
         }
 
