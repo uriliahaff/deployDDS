@@ -18,7 +18,7 @@
                                     <select class="form-control" id="prestacion" name="prestacion" placeholder="Servicio">
 
                                         {{#each prestaciones}}
-                                      <option value="{{this.id}}">{{this.servicio.nombre}} - {{this.establecimiento.nombre}} </option>
+                                      <option value="{{this.id}}">{{this.servicio.nombre}} - {{this.establecimiento.nombre}} ({{this.establecimiento.entidad.nombre}}) </option>
                                          {{/each}}
 
                                     </select>

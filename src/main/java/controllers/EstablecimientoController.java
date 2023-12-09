@@ -58,6 +58,11 @@ public class EstablecimientoController
 
         model.put("establecimiento", establecimiento);
 
+        List<Servicio> servicios = repositorioServicio.findAll();
+        for (PrestacionDeServicio servicio : establecimiento.getServicios()) {
+            servicios.removeIf(servic -> servic.getId() == servicio.getServicio().getId());
+        }
+        model.put("serviciosNoUsados",servicios);
 
         model.put("servicios", repositorioServicio.findAll());
 

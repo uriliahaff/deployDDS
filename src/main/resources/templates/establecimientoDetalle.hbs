@@ -61,7 +61,7 @@ background-color: green!important;
                 <label for="servicioId">Servicio:</label>
                 <select class="form-control" id="servicioId" name="servicioId">
                     <!-- Suponiendo que tienes una lista de servicios disponibles para elegir -->
-                    {{#each servicios}}
+                    {{#each serviciosNoUsados}}
                     <option value="{{this.id}}">{{this.nombre}}</option>
                     {{/each}}
                 </select>

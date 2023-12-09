@@ -26,7 +26,7 @@
             {{#each entidad.establecimientos}}
             <tr>
                 <td><a href="/establecimiento/{{this.id}}">{{this.nombre}}</a></td>
-                <td>{{this.direccion.direccionCompleta}}</td>
+                <td><strong>{{this.direccion.localidad.nombre}}</strong><i> ({{this.direccion.municipio.nombre}}, {{this.direccion.provincia.nombre}})</i></td>
                 <!-- Otros campos relevantes de los establecimientos -->
             </tr>
             {{/each}}
@@ -72,7 +72,7 @@
                             <select class="form-control" id="municipio" name="municipio" disabled onchange="habilitarLocalidad()">
                                 <option value="">Primero seleccione una Provincia</option>
                                 {{#each municipios}}
-                                <option value="{{this.id}}">{{this.nombre}}</option>
+                                <option value="{{this.id}}" data-provincia-id="{{this.provincia.id}}">{{this.nombre}}</option>
                                 {{/each}}
                             </select>
                             </div>
@@ -83,39 +83,10 @@
                             <select class="form-control" id="localidad" name="localidad" disabled>
                                 <option value="">Primero seleccione un Municipio</option>
                                 {{#each localidades}}
-                                <option value="{{this.id}}">{{this.nombre}}</option>
+                                <option value="{{this.id}}"data-municipio-id="{{this.municipio.id}}">{{this.nombre}}</option>
                                 {{/each}}
                             </select>
                             </div>
-
-                        <script>
-                            function habilitarMunicipio() {
-                                var provinciaSeleccionada = document.getElementById("provincia").value;
-                                var municipioSelect = document.getElementById("municipio");
-                                var botonSubmit = document.getElementById("botonSubmit");
-
-                                if (provinciaSeleccionada) {
-                                    municipioSelect.disabled = false;
-                                    botonSubmit.disabled = false; // Habilitar el botón si se selecciona una provincia
-                                } else {
-                                    municipioSelect.disabled = true;
-                                    document.getElementById("localidad").disabled = true; // También deshabilita localidad
-                                    botonSubmit.disabled = true; // Deshabilitar el botón si no se selecciona una provincia
-                                }
-                            }
-
-                            function habilitarLocalidad() {
-                                var municipioSeleccionado = document.getElementById("municipio").value;
-                                var localidadSelect = document.getElementById("localidad");
-
-                                if (municipioSeleccionado) {
-                                    localidadSelect.disabled = false;
-                                } else {
-                                    localidadSelect.disabled = true;
-                                }
-                            }
-                        </script>
-
 
             </div>
             <!-- Aquí puedes agregar más campos según sea necesario -->
@@ -132,6 +103,7 @@
 {{> base }}
 
         <!-- Aquí puedes añadir más secciones según sea necesario -->
+    <script src="/js/entidad.js"></script>
 
 <script>
     function checkServicioSeleccionado() {
