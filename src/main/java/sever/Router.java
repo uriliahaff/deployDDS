@@ -41,7 +41,7 @@ public class Router {
 
             Server.app().get("/admin/usuarios",
                     ((UsuariosController) FactoryController.controller("usuarios"))::index,
-                    dd);
+                    admin);
             Server.app().get("/admin/usuarios/{id}/editar",
                     ((UsuariosController) FactoryController.controller("usuarios"))::editar,
                     admin);
