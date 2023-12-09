@@ -40,14 +40,14 @@ public class Router {
 
 
             Server.app().get("/admin/usuarios",
-                    ((UsuariosController) FactoryController.controller("usuarios"))::index,
-                    admin);
+                    ((UsuariosController) FactoryController.controller("usuarios"))::index
+                    );
             Server.app().get("/admin/usuarios/{id}/editar",
-                    ((UsuariosController) FactoryController.controller("usuarios"))::editar,
-                    admin);
+                    ((UsuariosController) FactoryController.controller("usuarios"))::editar
+                    );
             Server.app().post("/admin/editarUsuario/{id}",
-                    ((UsuariosController) FactoryController.controller("usuarios"))::update,
-                    admin);
+                    ((UsuariosController) FactoryController.controller("usuarios"))::update
+                    );
             Server.app().post("/eliminarUsuario/{id}",
                     ((UsuariosController) FactoryController.controller("usuarios"))::delete,
                     admin);
@@ -74,10 +74,10 @@ public class Router {
                     admin);
 
 
-            Server.app().get("/admin/roles", ((RolController) FactoryController.controller("rol"))::indexRoles,
-                    admin);
-            Server.app().post("/admin/rol/crearRol", ((RolController) FactoryController.controller("rol"))::crearRol,
-                    admin);
+            Server.app().get("/admin/roles", ((RolController) FactoryController.controller("rol"))::indexRoles
+                    );
+            Server.app().post("/admin/rol/crearRol", ((RolController) FactoryController.controller("rol"))::crearRol
+                    );
             Server.app().post("/admin/rol/{id}/agregarPermiso", ((RolController) FactoryController.controller("rol"))::addPermiso,
                     admin);
             Server.app().post("/admin/rol/{id}/borrarPermiso/{permisoId}", ((RolController) FactoryController.controller("rol"))::borrarPermiso,
