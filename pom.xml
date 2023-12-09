@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ar.edu.utn.frba.dds</groupId>
-  <artifactId>ejercicio</artifactId>
+  <artifactId>javalin-deploy</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>ejercicio</name>
@@ -75,13 +75,6 @@
       <artifactId>twilio</artifactId>
       <version>9.8.0</version>
     </dependency>
-      <dependency>
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations</artifactId>
-          <version>RELEASE</version>
-          <scope>compile</scope>
-      </dependency>
-    <!--Nose pero esta en el ejemplo-->
     <dependency>
       <groupId>commons-cli</groupId>
       <artifactId>commons-cli</artifactId>
@@ -96,6 +89,12 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.17</version>
+    </dependency>
+    <!-- postgresql -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.14</version>
     </dependency>
     <!-- hsqldb -->
     <dependency>
@@ -147,11 +146,15 @@
 
   <build>
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
       </plugin>
+
+
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -192,6 +195,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -229,6 +233,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -238,19 +243,18 @@
           <target>17</target>
         </configuration>
       </plugin>
+
+
+
       <plugin>
-        <!-- Build an executable JAR -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <archive>
-            <manifest>
-              <mainClass>Main</mainClass>
-            </manifest>
-          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 </project>
