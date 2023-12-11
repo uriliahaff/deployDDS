@@ -41,11 +41,16 @@ public class CSVDataLoader {
                 EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
                Usuario userEntidadPrestadora = repositorioUsuario.findUsuarioByUsername(username);
                Entidad entidad = repositorioEntidad.findEntidadByName(nombreEntidad);
-               entidadPrestadora.setUsuario(userEntidadPrestadora);
-               entidadPrestadora.setEntidad(entidad);
+                entidadPrestadora.setUsuario(userEntidadPrestadora);
+                entidadPrestadora.setEntidad(entidad);
                 entidadPrestadora.setNombre(nombreEntidadPrestadora);
                 entidadPrestadora.setDescripcion(desripcionEntidadPrestadora);
                 entidadPrestadora.setCorreoElectronicoResponsable(mail);
+                if(userEntidadPrestadora == null || entidad == null){
+                   entidadPrestadora = null;
+                }
+
+
                 entidadesPrestadoras.add(entidadPrestadora);
             }
 

@@ -201,8 +201,9 @@ public class RepositorioUsuario {
             entityManager.getTransaction().begin();
             int i = 0;
             for (EntidadPrestadora entidadPrestadora : entidadesPrestadoras) {
-                entityManager.persist(entidadPrestadora);
-
+               if(entidadPrestadora!=null) {
+                   entityManager.persist(entidadPrestadora);
+               }
                 i++;
             }
 
