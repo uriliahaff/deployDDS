@@ -12,6 +12,7 @@ import domain.Usuarios.Usuario;
 import domain.informes.Incidente;
 import domain.services.NavBarVisualizer;
 import domain.services.notificadorDeIncidentes.NotificadorDeIncidentes;
+import domain.servicios.Estado;
 import domain.servicios.PrestacionDeServicio;
 import io.javalin.http.Context;
 
@@ -81,17 +82,6 @@ public void indexIncidentes(Context context) {
         System.out.println(incidentes.size());
     }
 
-    /*/ Formatear la fecha de inicio
-    List<String> fechasInicioFormateadas = incidentes.stream()
-            .map(incidente -> incidente.getFechaInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-            .toList();
-    for (int i = 0; i < fechasInicioFormateadas.size(); i++) {
-        String fechaInicioFormateada = fechasInicioFormateadas.get(i);
-        Incidente incidente = incidentes.get(i);
-        incidente.setFechaInicioFormateada(fechaInicioFormateada);
-    }
-*/
-
     incidentes.forEach(incidente -> incidente.setFechaInicioFormateada(incidente.getFechaInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     incidentes.stream().filter(incidente -> !incidente.estaAbierto()).forEach(incidente -> incidente.setFechaFinFormateada(incidente.getFechaInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
     model.put("incidentes",incidentes);
@@ -129,10 +119,20 @@ public void indexIncidentes(Context context) {
         LocalDateTime fechaActual = LocalDateTime.now();
         RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
 
-        //DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //incidente.setFechaCierre(LocalDateTime.parse(fechaActual.format(formatoFecha)));
+
         Usuario usuarioInformante = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(usuarioInformante.getId());
+
+        List <Incidente> incidentesAbiertos = repositorioDeIncidentes.findAllOpen();
+
+        boolean hayOtrosIncidentes = incidentesAbiertos.stream()
+                .anyMatch(i -> i.getServicioAfectado().equals(incidente.getServicioAfectado()) &&
+                        i != incidente &&
+                        !Collections.disjoint(i.getComunidadesAfectadas(), miembro.getComunidades()));
+
+        if(!hayOtrosIncidentes){
+            incidente.getServicioAfectado().setEstado(Estado.IN_SERVICE);
+        }
 
         incidente.cerrarIncidente(fechaActual, miembro);
         this.repositorioDeIncidentes.update(incidente);
@@ -155,23 +155,23 @@ public void indexIncidentes(Context context) {
     public void abrirIncidente(Context context){
         Incidente incidente = new Incidente();
         int userId = Integer.parseInt(context.cookie("id"));
-        //Usuario usuarioInformante = repositorioUsuario.findUsuarioById());
-        //List<Miembro> miembrosDelUsuario = repositorioUsuario.findMiembrosByUserId(usuarioInformante.getId());
-        //Miembro miembro =  miembrosDelUsuario.get(0);
+
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
         incidente.setMiembroInformante(miembro);
         this.asignarParametros(incidente, context);
 
         LocalDateTime fechaActual = LocalDateTime.now();
-        //DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        //incidente.setFechaInicio(LocalDateTime.parse(fechaActual.format(formatoFecha)));
         incidente.setFechaInicio(fechaActual);
 
-       List<Comunidad> comunidadesAfectadas = miembro.getComunidades();
-        incidente.addComunidadesAfectadas(comunidadesAfectadas);
-        this.repositorioDeIncidentes.save(incidente);
-        NotificadorDeIncidentes.notificarIncidente(incidente);
+        if(miembro.getComunidades().size()!=0){
+            incidente.getServicioAfectado().setEstado(Estado.OUT_OF_SERVICE);
+            List<Comunidad> comunidadesAfectadas = miembro.getComunidades();
+            incidente.addComunidadesAfectadas(comunidadesAfectadas);
+            this.repositorioDeIncidentes.save(incidente);
+            NotificadorDeIncidentes.notificarIncidente(incidente);
+        }
+
 
         context.redirect("/incidentes");
 
