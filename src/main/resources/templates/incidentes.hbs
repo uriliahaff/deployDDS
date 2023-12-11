@@ -13,7 +13,7 @@
                         </div>
                         <div class="card-body tabla">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-striped" id="dataTableIncidentes" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Descripcion</th>
@@ -31,10 +31,9 @@
                                         <tr>
                                             <td>{{this.descripcion}}</td>
                                             <td>{{this.miembroInformante.nombre}} {{this.miembroInformante.apellido}}</td>
-                                            <td>{{this.servicioAfectado.servicio.nombre}} - {{this.servicioAfectado.establecimiento.nombre}}</td>
+                                            <td>{{this.servicioAfectado.servicio.nombre}} - <a href="/establecimiento/{{this.servicioAfectado.establecimiento.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.nombre}}</a></td>
                                             <td> {{#each this.comunidadesAfectadas}}
-
-                                                    <span class="badge badge-success" style="background-color:#5e5e5e;"> {{this.nombre}} </span>
+                                            <a href="/comunidad/{{this.id}}" style=""><span class="badge badge-success" style="background-color:#5e5e5e;"> {{this.nombre}} </span></a>
                                                 {{/each}}
                                             </td>
                                             <td>

@@ -70,6 +70,10 @@ public class PerfilController
 
        List<OrganismoDeControl> organismosDeControl = repositorioUsuario.findOrganismosDeControlByUserId(profileUserId);
 
+       model.put("provincias",repositorioDireccion.findAllProvincias());
+       model.put("localidades",repositorioDireccion.findAllLocalidades());
+       model.put("municipios",repositorioDireccion.findAllMunicipios());
+
        if(!organismosDeControl.isEmpty())
        {
            model.put("esOrganismoControl",true);
@@ -82,9 +86,6 @@ public class PerfilController
        {
            model.put("esEntidadPrestadora",true);
            model.put("entidadesPrestadoras",entidadPrestadoras);
-           model.put("provincias",repositorioDireccion.findAllProvincias());
-           model.put("localidades",repositorioDireccion.findAllLocalidades());
-           model.put("municipios",repositorioDireccion.findAllMunicipios());
        }
 
 

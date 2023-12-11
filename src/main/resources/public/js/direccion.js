@@ -66,7 +66,7 @@ function habilitarMunicipio(id) {
     console.log("Provincia seleccionada:", provinciaSeleccionada);
 
     if (provinciaSeleccionada !== '') {
-        var municipios = document.querySelectorAll('#municipio option');
+        var municipios = document.querySelectorAll('#municipio'+id+ ' option');
         console.log("Total de municipios encontrados:", municipios.length);
 
         municipioDropdown.innerHTML = '<option value="">Primero seleccione una Provincia</option>';
@@ -94,7 +94,7 @@ function habilitarLocalidad(id) {
     console.log("Municipio seleccionado:", municipioSeleccionado);
 
     if (municipioSeleccionado !== '') {
-        var localidades = document.querySelectorAll('#localidad option');
+        var localidades = document.querySelectorAll('#localidad'+id+ ' option');
         console.log("Total de localidades encontradas:", localidades.length);
 
         localidadDropdown.innerHTML = '<option value="">Primero seleccione un Municipio</option>';

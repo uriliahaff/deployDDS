@@ -169,7 +169,7 @@
                                <td class="horario-en-minutos">{{this}}</td> <!-- Agregar una clase para identificar los campos de horario -->
                                <td>
                                    <!-- Botón para borrar un horario -->
-                                   <form action="/perfil/{{profileId}}/borrarHorario" method="POST">
+                                   <form action="/perfil/{{userID}}/borrarHorario" method="POST">
                                        <input type="hidden" name="horario" value="{{this}}">
                                        <button type="submit" class="btn btn-danger">Borrar</button>
                                    </form>
@@ -259,7 +259,7 @@
             <div class="card-body">
        <p class="">Descripcion: <strong>{{this.descripcion}}</strong></p>
        <p class="">Correo Electrónico: <strong>{{this.correoElectronicoResponsable}}</strong></p>
-       <p class="">Entidad:  <strong>{{this.entidad.nombre}}</strong></p>
+       <p class="">Entidad:  <a href="/entidad/{{this.entidad.id}}" style="color:black;"> <strong>{{this.entidad.nombre}}</strong></a></p>
        <p class="">Descripcion de entidad:  <strong>{{this.entidad.descripcion}}</strong></p>
            <div class="table-responsive tabla">
                <table class="table table-bordered" id="dataTableEstablecimientos" width="100%" cellspacing="0">
@@ -309,7 +309,7 @@
                            <select class="form-control" id="municipio{{this.id}}" name="municipio{{this.id}}" disabled onchange="habilitarLocalidad({{this.id}})">
                                <option value="">Primero seleccione una Provincia</option>
                                {{#each municipios}}
-                               <option value="{{this.id}}">{{this.nombre}}</option>
+                               <option value="{{this.id}}" data-provincia-id="{{this.provincia.id}}">{{this.nombre}}</option>
                                {{/each}}
                            </select>
                            </div>
@@ -320,7 +320,7 @@
                            <select class="form-control" id="localidad{{this.id}}" name="localidad{{this.id}}" disabled>
                                <option value="">Primero seleccione un Municipio</option>
                                {{#each localidades}}
-                               <option value="{{this.id}}">{{this.nombre}}</option>
+                               <option value="{{this.id}}" data-municipio-id="{{this.municipio.id}}">{{this.nombre}}</option>
                                {{/each}}
                            </select>
                            </div>

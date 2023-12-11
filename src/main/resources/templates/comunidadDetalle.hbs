@@ -10,11 +10,10 @@
 </div>
 <div class="card-body tabla">
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTableIntereses" width="100%" cellspacing="0">
+        <table class="table table-bordered " id="dataTableIntereses" width="100%" cellspacing="0">
             <thead>
             <tr>
-                <th>Nombre del Servicio</th>
-                <th>Descripción</th>
+                <th>Servicio</th>
                    {{#if editarComunidad}}
                 <th></th>
                 {{/if}}
@@ -24,7 +23,6 @@
             {{#each comunidad.intereses}}
             <tr>
                 <td>{{this.nombre}}</td>
-                <td>{{this.descripcion}}</td>
                                    {{#if editarComunidad}}
                 <td>
                     <form action="/comunidad/removerInteres" method="post">
@@ -64,7 +62,7 @@
 </div>
 <div class="card-body tabla">
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTableAdmin" width="100%" cellspacing="0">
+        <table class="table table-bordered table-striped" id="dataTableAdmin" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>Username</th>
@@ -103,7 +101,7 @@
 </div>
 <div class="card-body tabla">
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTableMiembros" width="100%" cellspacing="0">
+        <table class="table table-bordered table-striped" id="dataTableMiembros" width="100%" cellspacing="0">
             <tbody>
             {{#each listaMiembros}}
             <tr>

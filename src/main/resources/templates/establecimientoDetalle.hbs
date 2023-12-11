@@ -18,7 +18,7 @@ background-color: green!important;
     <div class="card-body">
         <h3>{{establecimiento.nombre}}</h3>
         <p>Descripcion: <strong>{{establecimiento.descripcion}}</strong></p>
-        <p>Entidad: <strong>{{establecimiento.entidad.nombre}}</strong></p>
+       <p class="">Entidad:  <a href="/entidad/{{establecimiento.entidad.id}}" style="color:black;"> <strong>{{establecimiento.entidad.nombre}}</strong></a></p>
         <p>Dirección: <strong> {{establecimiento.direccion.localidad.nombre}}</strong><i> ({{establecimiento.direccion.municipio.nombre}}, {{establecimiento.direccion.provincia.nombre}})</i></p>
     </div>
 </div>

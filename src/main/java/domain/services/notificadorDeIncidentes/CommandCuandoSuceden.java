@@ -17,7 +17,17 @@ public class CommandCuandoSuceden extends CommandoNotificacion{
                 miembro.getConfiguracionNotificacionDeIncidentes().getMedioPreferido()
                 ,"Nuevo Incidente"
                 , miembro
-                ,"Incidente en "+incidente.getServicioAfectado()
+                ,"Ups! Nuevo incidente de "+incidente.getServicioAfectado().getServicio().getNombre()
+                        +" - "
+                        +incidente.getServicioAfectado().getEstablecimiento().getEntidad().getNombre()
+                        +" - "
+                        +incidente.getServicioAfectado().getEstablecimiento().getDireccion().getLocalidad().getNombre()
+                        +" ("
+                        +incidente.getServicioAfectado().getEstablecimiento().getDireccion().getMunicipio().getNombre()
+                        +", "
+                        +incidente.getServicioAfectado().getEstablecimiento().getDireccion().getProvincia().getNombre()
+                        +"): "
+                        +incidente.getDescripcion()
         );
     }
 }

@@ -11,6 +11,7 @@ import domain.Usuarios.Comunidades.ConfiguracionNotificacionDeIncidentes;
 import domain.Usuarios.Comunidades.Miembro;
 import domain.Usuarios.EntidadPrestadora;
 import domain.Usuarios.OrganismoDeControl;
+import domain.Usuarios.Rol;
 import domain.Usuarios.Usuario;
 import domain.entidades.Entidad;
 import domain.services.notificationSender.ComponenteNotificador;
@@ -19,6 +20,7 @@ import domain.services.notificationSender.NotificarViaWpp;
 import io.javalin.http.Context;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,9 @@ public class SignInController {
                 context.redirect("/");
                 break;
         }
+
+
+
     }
 
     private Usuario generarUsuario(Context context, String username, String password) {
@@ -62,13 +67,13 @@ public class SignInController {
     {
         String username = context.formParam("username");
         String password = context.formParam("password");
-
+        Rol rolOrganismo = new Rol("adminOrganismo",new ArrayList<>());
         Usuario usuario = generarUsuario(context, username, password);
         if (usuario == null) {
-            context.redirect("/registrarOrganismo");
+            context.redirect("/signinOrganismo");
             return;
         }
-
+        usuario.addRol(rolOrganismo);
         repositorioUsuario.saveUsuario(usuario);
         String nombre = context.formParam("nombre");
         String descripcion = context.formParam("descripcion");
@@ -86,19 +91,22 @@ public class SignInController {
                 ));
         repositorioUsuario.saveOrganismoDeControl(organismoDeControl);
 
-        context.redirect("/login");
+        Usuario user = repositorioUsuario.findUsuarioByUsername(username);
+        context.redirect("/");
+        context.cookie("id", String.valueOf(user.getId()));
+        context.cookie("username", user.getUsername());
     }
     private void processSignInEntidadPrestadora(Context context)
     {
         String username = context.formParam("username");
         String password = context.formParam("password");
-
+        Rol rolEntidad = new Rol("adminEntidad",new ArrayList<>());
         Usuario usuario = generarUsuario(context, username, password);
         if (usuario == null) {
-            context.redirect("/registrarOrganismo");
+            context.redirect("/signinEntidad");
             return;
         }
-
+        usuario.addRol(rolEntidad);
         repositorioUsuario.saveUsuario(usuario);
         String nombre = context.formParam("nombre");
         String descripcion = context.formParam("descripcion");
@@ -124,7 +132,10 @@ public class SignInController {
         );
 
         repositorioUsuario.saveEntidadPrestadora(entidadPrestadora);
-        context.redirect("/login");
+        Usuario user = repositorioUsuario.findUsuarioByUsername(username);
+        context.redirect("/");
+        context.cookie("id", String.valueOf(user.getId()));
+        context.cookie("username", user.getUsername());
     }
     private void processSignInMiembro(Context context) {
         String username = context.formParam("username");
@@ -135,11 +146,15 @@ public class SignInController {
             context.redirect("/signin");
             return;
         }
+        repositorioUsuario.saveUsuario(usuario);
         String nombre = context.formParam("nombre");
         String apellido = context.formParam("apellido");
         String correoElectronico = context.formParam("correoElectronico");
         String telefono = context.formParam("telefono");
-
+        Usuario user = repositorioUsuario.findUsuarioByUsername(username);
+        context.redirect("/");
+        context.cookie("id", String.valueOf(user.getId()));
+        context.cookie("username", user.getUsername());
         if ((correoElectronico == null || correoElectronico.isEmpty()) && (telefono == null || telefono.isEmpty())) {
             context.sessionAttribute("error",  "Por favor, ingresa un correo electrónico o un teléfono.");
 
