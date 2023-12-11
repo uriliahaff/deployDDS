@@ -16,8 +16,10 @@
                                 <table class="table table-bordered table-striped" id="dataTableIncidentes" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Entidad</th>
+                                            <th>Establecimiento</th>
+                                            <th>Servicio</th>
                                             <th>Descripcion</th>
-                                            <th>Servicio afectado</th>
                                             <th>Fecha inicio</th>
                                             <th></th>
                                         </tr>
@@ -26,8 +28,11 @@
                                     <tbody>
                                          {{#each incidentes}}
                                         <tr>
+                                           <td><a href="/entidad/{{this.servicioAfectado.establecimiento.entidad.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.entidad.nombre}}</a></td>
+                                           <td><a href="/establecimiento/{{this.servicioAfectado.establecimiento.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.nombre}}</a></td>
+                                           <td>{{this.servicioAfectado.servicio.nombre}}</td>
+
                                             <td>{{this.descripcion}}</td>
-                                            <td>{{this.servicioAfectado.servicio.nombre}} - <a href="/establecimiento/{{this.servicioAfectado.establecimiento.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.nombre}}</a></td>
                                             <td>{{this.fechaInicioFormateada}}</td>
                                             <td>
                                             <form action="/cerrarIncidente/{{this.id}}" method="POST">

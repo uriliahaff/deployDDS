@@ -18,7 +18,9 @@
                                         <tr>
                                             <th>Descripcion</th>
                                             <th>Miembro informante</th>
-                                            <th>Servicio afectado</th>
+                                            <th>Entidad</th>
+                                          <th>Establecimiento</th>
+                                           <th>Servicio</th>
                                             <th>Comunidades afectadas</th>
                                             <th>Estado</th>
                                             <th>Fecha inicio</th>
@@ -31,8 +33,9 @@
                                         <tr>
                                             <td>{{this.descripcion}}</td>
                                             <td>{{this.miembroInformante.nombre}} {{this.miembroInformante.apellido}}</td>
-                                            <td>{{this.servicioAfectado.servicio.nombre}} - <a href="/establecimiento/{{this.servicioAfectado.establecimiento.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.nombre}}</a></td>
-                                            <td> {{#each this.comunidadesAfectadas}}
+                                           <td><a href="/entidad/{{this.servicioAfectado.establecimiento.entidad.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.entidad.nombre}}</a></td>
+                                           <td><a href="/establecimiento/{{this.servicioAfectado.establecimiento.id}}" style="color:black;">{{this.servicioAfectado.establecimiento.nombre}}</a></td>
+                                           <td>{{this.servicioAfectado.servicio.nombre}}</td>                                            <td> {{#each this.comunidadesAfectadas}}
                                             <a href="/comunidad/{{this.id}}" style=""><span class="badge badge-success" style="background-color:#5e5e5e;"> {{this.nombre}} </span></a>
                                                 {{/each}}
                                             </td>
