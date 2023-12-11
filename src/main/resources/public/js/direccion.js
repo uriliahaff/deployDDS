@@ -1,54 +1,60 @@
 function habilitarMunicipioPropio() {
     console.log("Entró en habilitarMunicipioPropio");
-    var provinciaSeleccionada = document.getElementById('provincia').value;
+    var provinciaDropdown = document.getElementById('provincia');
     var municipioDropdown = document.getElementById('municipio');
     var localidadDropdown = document.getElementById('localidad');
 
+    var provinciaSeleccionada = provinciaDropdown.value;
 
     console.log("Provincia seleccionada:", provinciaSeleccionada);
 
     if (provinciaSeleccionada !== '') {
+        // Resetear los campos de municipio y localidad al cambiar la provincia
+        municipioDropdown.value = '';
+        localidadDropdown.value = '';
+
         var municipios = document.querySelectorAll('#municipio option');
         console.log("Total de municipios encontrados:", municipios.length);
-        municipioDropdown.innerHTML = '<option value="">Primero seleccione una Provincia</option>';
-        municipioDropdown.disabled = true;
-        localidadDropdown.disabled = true;
-        municipios.forEach(function (option) {
-            if (option.getAttribute('data-provincia-id') === provinciaSeleccionada) {
-                console.log("Agregando municipio:", option.value);
 
-                municipioDropdown.appendChild(option.cloneNode(true));
+        municipios.forEach(function (option) {
+            option.style.display = 'none';
+            if (option.getAttribute('data-provincia-id') === provinciaSeleccionada) {
+                console.log("Mostrando municipio:", option.value);
+                option.style.display = '';
             }
         });
 
-        // Habilitar el dropdown de municipios
+        // Deshabilitar y habilitar el dropdown de municipios y localidades
         municipioDropdown.disabled = false;
+        localidadDropdown.disabled = true;
     }
 }
 
 function habilitarLocalidadPropio() {
     console.log("Entró en habilitarLocalidadPropio");
-
-    var municipioSeleccionado = document.getElementById("municipio").value;
+    var municipioDropdown = document.getElementById("municipio");
     var localidadDropdown = document.getElementById("localidad");
+
+    var municipioSeleccionado = municipioDropdown.value;
 
     console.log("Municipio seleccionado:", municipioSeleccionado);
 
     if (municipioSeleccionado !== '') {
+        // Resetear el campo de localidad al cambiar el municipio
+        localidadDropdown.value = '';
+
         var localidades = document.querySelectorAll('#localidad option');
         console.log("Total de localidades encontradas:", localidades.length);
 
-        localidadDropdown.innerHTML = '<option value="">Primero seleccione un Municipio</option>';
-        localidadDropdown.disabled = true;
-
         localidades.forEach(function (option) {
+            option.style.display = 'none';
             if (option.getAttribute('data-municipio-id') === municipioSeleccionado) {
-                console.log("Agregando localidad:", option.value);
-                localidadDropdown.appendChild(option.cloneNode(true));
+                console.log("Mostrando localidad:", option.value);
+                option.style.display = '';
             }
         });
 
-        // Habilitar el dropdown de localidades
+        // Deshabilitar y habilitar el dropdown de localidades
         localidadDropdown.disabled = false;
     } else {
         // Si no se ha seleccionado un municipio, deshabilitar y reiniciar el dropdown de localidades
@@ -59,55 +65,61 @@ function habilitarLocalidadPropio() {
 
 function habilitarMunicipio(id) {
     console.log("Entró en habilitarMunicipio");
-    var provinciaSeleccionada = document.getElementById("provincia" + id).value;
+    var provinciaDropdown = document.getElementById("provincia" + id);
     var municipioDropdown = document.getElementById("municipio" + id);
     var localidadDropdown = document.getElementById("localidad" + id);
+
+    var provinciaSeleccionada = provinciaDropdown.value;
 
     console.log("Provincia seleccionada:", provinciaSeleccionada);
 
     if (provinciaSeleccionada !== '') {
-        var municipios = document.querySelectorAll('#municipio'+id+ ' option');
+        // Resetear los campos de municipio y localidad al cambiar la provincia
+        municipioDropdown.value = '';
+        localidadDropdown.value = '';
+
+        var municipios = document.querySelectorAll('#municipio' + id + ' option');
         console.log("Total de municipios encontrados:", municipios.length);
 
-        municipioDropdown.innerHTML = '<option value="">Primero seleccione una Provincia</option>';
-        municipioDropdown.disabled = true;
-        localidadDropdown.disabled = true;
         municipios.forEach(function (option) {
+            option.style.display = 'none';
             if (option.getAttribute('data-provincia-id') === provinciaSeleccionada) {
-                console.log("Agregando municipio:", option.value);
-
-                municipioDropdown.appendChild(option.cloneNode(true));
+                console.log("Mostrando municipio:", option.value);
+                option.style.display = '';
             }
         });
 
-        // Habilitar el dropdown de municipios
+        // Deshabilitar y habilitar el dropdown de municipios y localidades
         municipioDropdown.disabled = false;
+        localidadDropdown.disabled = true;
     }
 }
 
 function habilitarLocalidad(id) {
     console.log("Entró en habilitarLocalidad");
-
-    var municipioSeleccionado = document.getElementById("municipio" + id).value;
+    var municipioDropdown = document.getElementById("municipio" + id);
     var localidadDropdown = document.getElementById("localidad" + id);
+
+    var municipioSeleccionado = municipioDropdown.value;
 
     console.log("Municipio seleccionado:", municipioSeleccionado);
 
     if (municipioSeleccionado !== '') {
-        var localidades = document.querySelectorAll('#localidad'+id+ ' option');
+        // Resetear el campo de localidad al cambiar el municipio
+        localidadDropdown.value = '';
+
+        var localidades = document.querySelectorAll('#localidad' + id + ' option');
         console.log("Total de localidades encontradas:", localidades.length);
 
-        localidadDropdown.innerHTML = '<option value="">Primero seleccione un Municipio</option>';
-        localidadDropdown.disabled = true;
-
         localidades.forEach(function (option) {
+            option.style.display = 'none';
             if (option.getAttribute('data-municipio-id') === municipioSeleccionado) {
-                console.log("Agregando localidad:", option.value);
-                localidadDropdown.appendChild(option.cloneNode(true));
+                console.log("Mostrando localidad:", option.value);
+                option.style.display = '';
             }
         });
 
-        // Habilitar el dropdown de localidades
+        // Deshabilitar y habilitar el dropdown de localidades
         localidadDropdown.disabled = false;
     } else {
         // Si no se ha seleccionado un municipio, deshabilitar y reiniciar el dropdown de localidades
