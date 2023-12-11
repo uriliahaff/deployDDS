@@ -103,9 +103,8 @@ public class ComunidadController {
         repositorioUsuario.updateMiembro(miembro);
 
         context.redirect("/comunidad/"+idComunidad);}else {
-        context.redirect("/comunidades/");
     }
-
+        context.redirect("/comunidades/");
     }
 
     public void mostrarComunidad(Context context) {
