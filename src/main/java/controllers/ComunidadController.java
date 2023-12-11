@@ -92,12 +92,15 @@ public class ComunidadController {
         Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         admins.add(user);
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(user.getId());
+
         miembros.add(miembro);
         nuevaComunidad.setIntereses(interesesSeleccionados);
         nuevaComunidad.setAdmins(admins);
         nuevaComunidad.setMiembros(miembros);
         int idComunidad = repositorioComunidad.save(nuevaComunidad);
-
+        Comunidad comunidad = repositorioComunidad.find(idComunidad);
+        miembro.addComunidad(comunidad);
+        repositorioUsuario.updateMiembro(miembro);
 
         context.redirect("/comunidad/"+idComunidad);
     }
@@ -198,8 +201,17 @@ public class ComunidadController {
         int adminId = Integer.parseInt(context.formParam("adminId"));
 
         Comunidad comunidad = repositorioComunidad.find(comunidadId);
-
+        Usuario user = repositorioUsuario.findUsuarioById(adminId);
         comunidad.removerAdmin(adminId);
+
+        if (comunidad.getAdmins().size() == 0 && comunidad.getMiembros().size() != 0) {
+            for (Miembro miembro : comunidad.getMiembros()) {
+                if (!miembro.getUsuario().equals(user)) {
+                    comunidad.addAdmins(miembro.getUsuario());
+                    break;
+                }
+            }
+        }
 
         repositorioComunidad.update(comunidad);
 
@@ -214,6 +226,10 @@ public class ComunidadController {
 
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(userId);
         Comunidad comunidad = repositorioComunidad.find(comunidadId);
+
+        if(comunidad.getAdmins().size()==0){
+            comunidad.addAdmins(miembro.getUsuario());
+        }
 
         miembro.addComunidad(comunidad);
         comunidad.agregarMiembros(miembro);

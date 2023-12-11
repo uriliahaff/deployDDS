@@ -79,6 +79,7 @@
                 <td>
                     <form action="/comunidad/removerAdmin" method="post">
                         <input type="hidden" name="adminId" value="{{this.id}}" />
+                         <input type="hidden" name="comunidadId" value="{{comunidad.id}}" />
                         <button type="submit" class="btn btn-danger"><i class="fas fa-times fa-sm fa-fw mr-2 "></i>Quitar</button>
                     </form>
                 </td>
