@@ -92,7 +92,7 @@ public class ComunidadController {
         Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         admins.add(user);
         Miembro miembro = repositorioUsuario.findMiembroByUsuarioId(user.getId());
-
+    if(miembro!=null){
         miembros.add(miembro);
         nuevaComunidad.setIntereses(interesesSeleccionados);
         nuevaComunidad.setAdmins(admins);
@@ -102,7 +102,10 @@ public class ComunidadController {
         miembro.addComunidad(comunidad);
         repositorioUsuario.updateMiembro(miembro);
 
-        context.redirect("/comunidad/"+idComunidad);
+        context.redirect("/comunidad/"+idComunidad);}else {
+        context.redirect("/comunidades/");
+    }
+
     }
 
     public void mostrarComunidad(Context context) {

@@ -37,7 +37,8 @@ public class EntidadPrestadora{
     @Setter
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name="descripcion", columnDefinition="TEXT")
+
     @Getter
     @Setter
     private String descripcion;

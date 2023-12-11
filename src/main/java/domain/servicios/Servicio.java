@@ -14,7 +14,7 @@ public class Servicio {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name="descripcion", columnDefinition="TEXT")
     private String descripcion;
 
     // Constructor vacío para Hibernate

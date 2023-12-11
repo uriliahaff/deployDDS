@@ -27,7 +27,8 @@ public class Establecimiento {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name="descripcion", columnDefinition="TEXT")
+
     private String descripcion;
 
     @OneToMany(mappedBy = "establecimiento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -36,7 +36,8 @@ public class Entidad {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "descripcion")
+    @Column(name="descripcion", columnDefinition="TEXT")
+
     private String descripcion;
 
     @OneToMany(mappedBy = "entidad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

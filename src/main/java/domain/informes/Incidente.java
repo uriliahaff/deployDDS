@@ -27,7 +27,7 @@ public class Incidente {
     @Setter
     private int id;
 
-    @Column(name = "descripcion",nullable = false)
+    @Column(name = "descripcion",nullable = false, columnDefinition = "TEXT")
     @Getter
     @Setter
     private String descripcion;

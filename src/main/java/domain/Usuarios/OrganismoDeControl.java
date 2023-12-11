@@ -32,7 +32,8 @@ public class OrganismoDeControl{
     @Setter
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name="descripcion", columnDefinition="TEXT")
+
     @Setter
     private String descripcion;
 
