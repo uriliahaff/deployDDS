@@ -1,9 +1,6 @@
 package controllers;
 
-import domain.Repositorios.RepositorioDireccion;
-import domain.Repositorios.RepositorioEntidadPrestadoraOrganismoControl;
-import domain.Repositorios.RepositorioIncidente;
-import domain.Repositorios.RepositorioUsuario;
+import domain.Repositorios.*;
 
 public class FactoryController {
 
@@ -18,7 +15,7 @@ public class FactoryController {
             case "organismos": controller = new EntidadesOrganismosController(new RepositorioEntidadPrestadoraOrganismoControl(), new RepositorioUsuario()); break;
             case "usuarios": controller = new UsuariosController(new RepositorioUsuario()); break;
             case "rankings": controller = new RankingController(new RepositorioUsuario()); break;
-            case "incidentes": controller = new IncidenteController(new RepositorioIncidente(), new RepositorioUsuario()); break;
+            case "incidentes": controller = new IncidenteController(new RepositorioIncidente(), new RepositorioUsuario(), new RepositorioEntidad()); break;
             case "comunidad": controller = new ComunidadController(); break;
             case "servicios": controller = new ServicioController(); break;
             case "organismoDeControl": controller = new OrganismoDeControlController(); break;

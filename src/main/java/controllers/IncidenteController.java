@@ -3,12 +3,15 @@ package controllers;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import domain.Repositorios.RepositorioEntidad;
 import domain.Repositorios.RepositorioIncidente;
 import domain.Repositorios.RepositorioServicio;
 import domain.Repositorios.RepositorioUsuario;
 import domain.Usuarios.Comunidades.Comunidad;
 import domain.Usuarios.Comunidades.Miembro;
 import domain.Usuarios.Usuario;
+import domain.entidades.Entidad;
+import domain.entidades.Establecimiento;
 import domain.informes.Incidente;
 import domain.services.NavBarVisualizer;
 import domain.services.notificadorDeIncidentes.NotificadorDeIncidentes;
@@ -27,11 +30,14 @@ public class IncidenteController {
 
 
     private RepositorioIncidente repositorioDeIncidentes;
+    private RepositorioEntidad repositorioEntidad;
+
     private RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
 
-    public IncidenteController(RepositorioIncidente repo, RepositorioUsuario repositorioUsuario){
+    public IncidenteController(RepositorioIncidente repo, RepositorioUsuario repositorioUsuario, RepositorioEntidad repoEntidad){
         this.repositorioDeIncidentes = repo;
         this.repositorioUsuario = repositorioUsuario;
+        this.repositorioEntidad = repoEntidad;
     }
 
 public void index(Context context){
@@ -101,10 +107,12 @@ public void indexIncidentes(Context context) {
 
         RepositorioServicio repositorioServicios = new RepositorioServicio();
         List<PrestacionDeServicio> prestacionDeServicios = repositorioServicios.buscarTodasLasPrestaciones();
+        List<Entidad> entidades = repositorioEntidad.findAll();
 
         model.put("username", context.cookie("username"));
         model.put("UserId", context.cookie("id"));
         model.put("prestaciones", prestacionDeServicios);
+        model.put("entidades", entidades);
         Usuario user = repositorioUsuario.findUsuarioById(Integer.parseInt(context.cookie("id")));
         NavBarVisualizer navBarVisualizer = new NavBarVisualizer();
         navBarVisualizer.colocarItems(user.getRoles(), model);
@@ -178,13 +186,26 @@ public void indexIncidentes(Context context) {
     }
 
     private void asignarParametros(Incidente incidente, Context context) {
-
+        Entidad entidad = new Entidad();
+        Establecimiento establecimiento = new Establecimiento();
         if(!Objects.equals(context.formParam("descripcion"), "")) {
             incidente.setDescripcion(context.formParam("descripcion"));
         }
-        if(!Objects.equals(context.formParam("prestacion"), "")) {
+      /*  if(!Objects.equals(context.formParam("entidad"), "")) {
+
+             entidad = repositorioEntidad.findEntidadById(Integer.parseInt(context.formParam("entidad")));
+        }
+        if(!Objects.equals(context.formParam("establecimiento"), "")) {
+
+            establecimiento = entidad.getEstablecimientos()
+                    .stream()
+                    .filter(e -> Objects.equals(e.getId(), Integer.parseInt(context.formParam("establecimiento"))))
+                    .findFirst()
+                    .orElse(null);
+        }*/
+        if(!Objects.equals(context.formParam("servicio"), "")) {
             RepositorioServicio repositorioServicio = new RepositorioServicio();
-            PrestacionDeServicio prestacion = repositorioServicio.findPrestacionById(Integer.parseInt(context.formParam("prestacion")));
+            PrestacionDeServicio prestacion = repositorioServicio.findPrestacionById(Integer.parseInt(context.formParam("servicio")));
             incidente.setServicioAfectado(prestacion);
         }
 
